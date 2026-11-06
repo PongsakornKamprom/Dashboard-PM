@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Top 20 SAIFI/SAIDI กฟฉ.2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: PEA purple header band → filter row → KPI tiles → SAIFI/SAIDI ranking table (expand for events) → cause & time analysis → source note. Tokens follow the existing PM Top 20 tracker. */
+:root{
+  --p900:#2E1A54; --p700:#4B2E83; --p500:#7C5CBF; --p100:#EFE9FA; --gold:#E8A33D;
+  --green:#1E9E6B; --green-bg:#E5F7EF; --amber:#C77D12; --amber-bg:#FDF1DC; --red:#D64545; --red-bg:#FCEAEA; --blue:#2F80C4; --blue-bg:#E9F3FB; --grey-bg:#F0EEF4;
+  --ink:#241D34; --muted:#736A85; --bg:#F5F3FA; --card:#FFFFFF; --border:#E4DFF1; --track:#EFEAF9; --head-ink:#3E2069; --hover:#F1ECFB; --zebra:#FAF8FD;
+  --bar:#7C5CBF; --bar2:#C7B6EA; --tick:#241D34;
+  --f-display:'Kanit','Segoe UI',Tahoma,sans-serif; --f-body:'Sarabun','Segoe UI',Tahoma,sans-serif;
+  --shadow:0 12px 30px -18px rgba(46,26,84,.35);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --p100:#2C2242; --ink:#EDE8F7; --muted:#A79DBA; --bg:#15111D; --card:#1F1A2B; --border:#352C48; --track:#2C2440; --head-ink:#CDBAF5; --hover:#2A2240; --zebra:#231D31;
+  --bar:#A58BE0; --bar2:#5B4787; --tick:#EDE8F7;
+  --green-bg:#163A2D; --amber-bg:#3B2C12; --red-bg:#3D1E22; --blue-bg:#17293B; --grey-bg:#2A2533;
+  --green:#36C08A; --red:#EF6B6B; --blue:#5AA5E6; --amber:#E9A23B; --shadow:0 12px 30px -18px rgba(0,0,0,.7); color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --p100:#2C2242; --ink:#EDE8F7; --muted:#A79DBA; --bg:#15111D; --card:#1F1A2B; --border:#352C48; --track:#2C2440; --head-ink:#CDBAF5; --hover:#2A2240; --zebra:#231D31;
+  --bar:#A58BE0; --bar2:#5B4787; --tick:#EDE8F7;
+  --green-bg:#163A2D; --amber-bg:#3B2C12; --red-bg:#3D1E22; --blue-bg:#17293B; --grey-bg:#2A2533;
+  --green:#36C08A; --red:#EF6B6B; --blue:#5AA5E6; --amber:#E9A23B; --shadow:0 12px 30px -18px rgba(0,0,0,.7); color-scheme:dark; }
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--f-body);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.inner{max-width:1320px;margin:0 auto;min-width:0;width:100%}
+.header{background:linear-gradient(120deg,#2E1A54 0%,#4B2E83 60%,#6B4BB0 100%);color:#fff;padding-block:24px 28px}
+.eyebrow{font-family:var(--f-display);font-size:17px;letter-spacing:1px;color:#E8A33D;font-weight:600;margin-bottom:4px}
+h1{font-family:var(--f-display);font-size:clamp(20px,3vw,27px);font-weight:700;margin:0 0 4px;line-height:1.35;text-wrap:balance}
+.subtitle{font-size:14px;color:#D9CFF0;max-width:860px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.meta span{font-size:12.5px;background:rgba(255,255,255,.14);padding:3px 10px;border-radius:20px;color:#fff}
+.wrap{padding-block:18px 60px}
+.col{display:flex;flex-direction:column;gap:18px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,tr:focus-visible,.hit:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.filter-bar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.filter-bar label{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px;min-width:0;flex:1 1 220px}
+.filter-bar select{min-width:0;flex:1 1 140px}
+.filter-bar .cnt{font-size:12.5px;color:var(--muted);margin-left:auto}
+select,input,textarea{font-family:var(--f-body);font-size:14.5px;color:var(--ink);background:var(--card);border:1px solid var(--border);border-radius:9px;padding:7px 10px;max-width:100%}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.kpis{grid-template-columns:minmax(0,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi .lbl{font-size:13px;color:var(--muted)}
+.kpi .val{font-family:var(--f-display);font-size:28px;font-weight:600;color:var(--head-ink);font-variant-numeric:tabular-nums;line-height:1.25}
+.kpi .val small{font-size:15px;color:var(--muted);font-weight:500}
+.kpi .sub{font-size:12.5px;color:var(--muted)}
+.meter{height:6px;background:var(--track);border-radius:4px;overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:var(--bar);border-radius:4px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;min-width:0;box-shadow:var(--shadow)}
+.card h2{font-family:var(--f-display);font-size:17px;font-weight:600;color:var(--head-ink);margin:0 0 2px}
+.card .hint{font-size:13px;color:var(--muted);margin:0 0 12px}
+.ch{display:flex;flex-wrap:wrap;gap:8px 12px;justify-content:space-between;align-items:flex-start}
+.ch>div{min-width:0}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;flex:none}
+.seg button{font-family:var(--f-display);font-size:13px;border:0;background:transparent;color:var(--muted);padding:5px 11px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--p700);color:#fff}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font-family:var(--f-display);font-weight:500;font-size:12.5px;color:var(--muted);text-align:left;padding:8px 8px;border-bottom:1px solid var(--border);white-space:nowrap;background:var(--card)}
+td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.row{cursor:pointer}
+tr.row:hover td{background:var(--hover)}
+tr.row[aria-expanded="true"] td{background:var(--p100)}
+tr.det td{background:var(--zebra);padding:12px 12px 16px}
+.dev{font-family:var(--f-display);font-weight:600;color:var(--head-ink);white-space:nowrap}
+.sm{font-size:12.5px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:1px 8px;border-radius:20px;background:var(--grey-bg);color:var(--ink);white-space:nowrap}
+.chip.cb{background:var(--blue-bg);color:var(--blue)}
+.chip.rc{background:var(--amber-bg);color:var(--amber)}
+.over{color:var(--red);font-weight:700;white-space:nowrap}
+.over::after{content:" ▲";font-size:10px}
+.ibar{display:flex;align-items:center;gap:8px;min-width:150px}
+.ibar .t{flex:1;height:10px;background:var(--track);border-radius:3px;overflow:hidden;min-width:60px}
+.ibar .t i{display:block;height:100%;background:var(--bar);border-radius:0 3px 3px 0}
+.ibar .t.s i{background:var(--bar2)}
+.ibar b{font-weight:500;font-variant-numeric:tabular-nums;min-width:62px;text-align:right;font-size:13.5px}
+.ibar em{font-style:normal;font-size:11.5px;color:var(--muted);min-width:38px;text-align:right;font-variant-numeric:tabular-nums}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.hbars{display:flex;flex-direction:column;gap:9px}
+.hb{display:grid;grid-template-columns:minmax(96px,150px) minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:13.5px}
+.hb .nm{overflow-wrap:anywhere}
+.hb .tr{position:relative;height:14px;background:var(--track);border-radius:3px}
+.hb .tr i{position:absolute;left:0;top:0;bottom:0;background:var(--bar);border-radius:0 4px 4px 0}
+.hb .tr u{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--tick);border-radius:1px;text-decoration:none}
+.hb .v{text-align:right;font-variant-numeric:tabular-nums}
+.hb .v small{display:block;font-size:11.5px;color:var(--muted);line-height:1.2}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:12px;font-size:12.5px;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{display:inline-block;width:12px;height:10px;border-radius:2px;background:var(--bar)}
+.swt{display:inline-block;width:2px;height:14px;background:var(--tick)}
+.cols{display:flex;align-items:flex-end;gap:2px;height:150px;border-bottom:1px solid var(--border);position:relative}
+.cols .hit{flex:1;height:100%;display:flex;align-items:flex-end;cursor:default;min-width:0;outline:none}
+.cols .hit i{display:block;width:100%;background:var(--bar);border-radius:3px 3px 0 0;min-height:0}
+.cols .hit.we i{background:var(--bar2)}
+.cols .hit:hover i,.cols .hit:focus i{filter:brightness(1.15)}
+.axis{display:flex;gap:2px;font-size:11px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
+.axis span{flex:1;text-align:center;min-width:0}
+.gl{position:absolute;left:0;right:0;border-top:1px dashed var(--border);font-size:10.5px;color:var(--muted);pointer-events:none}
+.gl span{position:absolute;right:0;top:-15px;background:var(--card);padding-left:4px}
+.tip{position:fixed;z-index:30;pointer-events:none;background:var(--card);color:var(--ink);border:1px solid var(--border);border-radius:9px;padding:7px 10px;font-size:12.5px;box-shadow:var(--shadow);max-width:260px}
+.tip b{font-family:var(--f-display);font-size:15px;font-weight:600;display:block}
+.callout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.callout{grid-template-columns:minmax(0,1fr)}}
+.cl{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--card);display:flex;flex-direction:column;gap:4px;min-width:0}
+.cl h3{font-family:var(--f-display);font-size:14.5px;font-weight:600;margin:0;color:var(--head-ink);display:flex;gap:8px;align-items:center}
+.cl p{margin:0;font-size:13.5px}
+.tag{font-family:var(--f-display);font-size:11.5px;padding:1px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+.tag.r{background:var(--red-bg);color:var(--red)} .tag.a{background:var(--amber-bg);color:var(--amber)} .tag.b{background:var(--blue-bg);color:var(--blue)}
+.dgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.9fr);gap:14px}
+@media (max-width:900px){.dgrid{grid-template-columns:minmax(0,1fr)}}
+.dbox{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.dbox h4{font-family:var(--f-display);font-size:14px;margin:0;color:var(--head-ink);font-weight:600}
+.pm{display:flex;flex-direction:column;gap:6px}
+.pm div{font-size:13.5px;display:flex;gap:8px;align-items:baseline}
+.pm .tag{flex:none}
+table.ev{font-size:13px}
+table.ev td,table.ev th{padding:6px 6px}
+table.ev td{white-space:nowrap}
+table.ev td.w{white-space:normal;min-width:150px}
+.st{font-family:var(--f-display);font-size:11.5px;padding:0 6px;border-radius:5px;background:var(--grey-bg)}
+.st.tl{background:var(--red-bg);color:var(--red)}
+.fake{color:var(--amber);font-weight:600}
+.btn.ghost.danger{color:var(--red);border-color:var(--red)}
+.btn.danger-solid{background:var(--red);color:#fff}
+details.hist{border:1px solid var(--border);border-radius:9px;padding:6px 10px;font-size:12.5px}
+details.hist summary{cursor:pointer;font-family:var(--f-display);color:var(--head-ink)}
+.hrow{border-top:1px solid var(--border);padding:6px 0;display:flex;flex-direction:column;gap:2px;color:var(--muted);overflow-wrap:anywhere}
+.hrow b{color:var(--ink);font-weight:600}
+.offl{white-space:nowrap;font-size:13.5px;line-height:1.45}
+.offl div{color:var(--muted)}
+.offl div.me{color:var(--ink);font-weight:600;font-size:14px}
+.offl div.z{opacity:.6}
+.offl span{font-size:11.5px;color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums}
+textarea{width:100%;resize:vertical;min-height:64px}
+.btn{font-family:var(--f-display);font-size:13px;font-weight:500;border:0;border-radius:9px;padding:5px 11px;cursor:pointer;background:var(--p700);color:#fff;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--head-ink);border:1px solid var(--border)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.lg{font-size:14px;padding:8px 15px}
+.done-t{display:block;font-size:11.5px;color:var(--green);margin-top:2px;white-space:nowrap}
+.sync{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex:none}
+.dot.ok{background:var(--green)} .dot.err{background:var(--red)}
+.trk{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:600px){.trk{grid-template-columns:minmax(0,1fr)}}
+.trk>div{border:1px solid var(--border);border-radius:9px;padding:6px 9px;font-size:12.5px;min-width:0;overflow-wrap:anywhere}
+.trk b{font-family:var(--f-display);font-weight:600;color:var(--head-ink);display:block}
+.pill{display:inline-block;font-family:var(--f-display);font-size:11.5px;padding:1px 8px;border-radius:10px;margin-top:4px;line-height:1.4}
+.pill.none{background:var(--grey-bg);color:var(--muted)} .pill.todo{background:var(--amber-bg);color:var(--amber)} .pill.req{background:var(--blue-bg);color:var(--blue)} .pill.work{background:var(--p100);color:var(--head-ink)} .pill.done{background:var(--green-bg);color:var(--green)} .pill.na{background:var(--grey-bg);color:var(--muted)}
+dialog{border:0;border-radius:16px;padding:0;width:min(760px,calc(100vw - 32px));max-height:calc(100vh - 40px);background:var(--card);color:var(--ink);box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(20,12,36,.55)}
+.dlg-h{background:var(--p700);color:#fff;padding:14px 56px 14px 18px;position:sticky;top:0;z-index:2}
+.xbtn{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.16);color:#fff;font-size:17px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.xbtn:hover{background:rgba(255,255,255,.3)}
+.xbtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.dlg-h h3{font-family:var(--f-display);margin:0;font-size:18px;font-weight:600}
+.dlg-h div{font-size:13px;color:#E3DAF6}
+form.f{padding:14px 18px 18px;display:flex;flex-direction:column;gap:14px}
+fieldset{border:1px solid var(--border);border-radius:12px;padding:10px 12px 12px;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 12px;min-width:0}
+legend{font-family:var(--f-display);font-weight:600;color:var(--head-ink);padding:0 6px;font-size:14.5px}
+legend small{font-family:var(--f-body);font-weight:400;color:var(--muted);font-size:12.5px}
+.f label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.f .w2{grid-column:span 2} .f .w3{grid-column:1/-1}
+.f input,.f select{width:100%}
+@media (max-width:600px){fieldset{grid-template-columns:minmax(0,1fr)}.f .w2{grid-column:auto}}
+.f-actions{display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
+.f-msg{font-size:13px;color:var(--red);margin-right:auto}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--p900);color:#fff;padding:9px 16px;border-radius:10px;font-size:14px;z-index:40;box-shadow:var(--shadow)}
+.dcol{display:flex;flex-direction:column;gap:14px}
+table.offs td,table.offs th{padding:6px 8px}
+table.offs tr.me td{background:var(--p100);font-weight:600}
+table.offs tr.zero td{color:var(--muted)}
+table.offs .ibar{min-width:180px}
+.oth{font-size:12px;color:var(--muted);white-space:normal;min-width:160px}
+.oth b{color:var(--ink);font-weight:500}
+.note{font-size:13px;color:var(--muted);background:var(--card);border:1px dashed var(--border);border-radius:12px;padding:10px 14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<header class="header gut">
+  <div class="inner">
+    <div class="eyebrow">กฟฉ.2 · ข้อมูลรายงาน 52 ประจำเดือนตุลาคม 2569</div>
+    <h1>Top 20 อุปกรณ์ที่กระทบค่าดัชนี SAIFI / SAIDI · วิเคราะห์เหตุการณ์เพื่อวางแผน PM</h1>
+    <div class="subtitle">อันดับตามไฟล์ Top 20 Feeder/Device (เรียงตาม Sum of AffectedCustomer) เชื่อมกับรายละเอียดเหตุการณ์รายครั้งจากรายงาน 52 เพื่อดูสาเหตุ ช่วงเวลา และแนวทางบำรุงรักษาระยะสั้น กลาง ยาว</div>
+    <div class="meta"><span>20 รายการ · <b id="mDev">–</b> อุปกรณ์ · <b id="mFdr">–</b> ฟีดเดอร์</span><span><b id="mEv">–</b> เหตุการณ์ใน Top 20 (ไม่นับซ้ำ)</span><span>ทั้ง กฟฉ.2 <b id="mReg">–</b> เหตุการณ์ · <b id="mOffs">–</b> กฟส.</span></div>
+  </div>
+</header>
+
+<main class="wrap gut">
+<div class="inner col">
+  <div class="filter-bar">
+    <label for="fOff">กฟส. <select id="fOff"><option value="">ทุก กฟส.</option></select></label>
+    <label for="fTyp">ประเภทอุปกรณ์ <select id="fTyp"><option value="">ทั้งหมด</option><option value="CB">CB Outgoing</option><option value="Recloser">Recloser</option></select></label>
+    <span class="cnt" id="fCnt"></span>
+    <button type="button" class="btn lg" id="bXls">Export Excel</button>
+    <button type="button" class="btn ghost lg danger" id="bClr" title="ลบข้อมูลที่ผู้ใช้อัปเดตทั้งหมด ต้องใช้รหัสผ่าน">ล้างข้อมูลที่อัปเดต</button>
+    <div class="sync"><i class="dot" id="syncDot"></i><span id="syncTxt">กำลังโหลดสถานะการอัปเดต…</span></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><span class="lbl">ผู้ใช้ไฟได้รับผลกระทบ (ฐาน SAIFI)</span><span class="val" id="kCus">–</span><div class="meter"><i id="kCusBar"></i></div><span class="sub" id="kCusSub"></span></div>
+    <div class="kpi"><span class="lbl">CusXTime ผู้ใช้ไฟ-นาที (ฐาน SAIDI)</span><span class="val" id="kCxt">–</span><div class="meter"><i id="kCxtBar"></i></div><span class="sub" id="kCxtSub"></span></div>
+    <div class="kpi"><span class="lbl">จำนวนครั้งไฟฟ้าขัดข้อง</span><span class="val" id="kCnt">–</span><span class="sub" id="kCntSub"></span></div>
+    <div class="kpi"><span class="lbl">ไม่พบสาเหตุจากการตรวจ</span><span class="val" id="kUnk">–</span><span class="sub" id="kUnkSub"></span></div>
+  </div>
+
+  <div class="card">
+    <div class="ch">
+      <div><h2>อันดับ Top 20 · ผลกระทบต่อ SAIFI และ SAIDI</h2><p class="hint">แท่งแสดงสัดส่วนเทียบทั้ง กฟฉ.2 คลิกแถวเพื่อดูเหตุการณ์รายครั้งและแนวทาง PM</p></div>
+      <div class="seg" role="group" aria-label="เรียงตาม"><button type="button" data-sort="cus" aria-pressed="true">เรียงตามผู้ใช้ไฟ</button><button type="button" data-sort="cxt" aria-pressed="false">เรียงตาม CusXTime</button></div>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th class="n">#</th><th>อุปกรณ์</th><th>กฟฟ. ที่ได้รับผลกระทบ</th><th class="n">ครั้ง</th><th class="n">นาที</th><th>ผู้ใช้ไฟ (ราย) · % กฟฉ.2</th><th>CusXTime · % กฟฉ.2</th><th>สาเหตุหลัก</th><th>อัปเดตผล</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table></div>
+    <p class="sm" style="margin:10px 0 0">ครั้งสีแดง ▲ = เกินเกณฑ์ทั้งปีแล้วในเดือนเดียว (CB &lt; 9, Recloser &lt; 10 ครั้ง/ตัว/ปี) · นาที = Duration ตามไฟล์ Top 20 (ผลรวม FirstStepDuration)</p>
+  </div>
+
+  <div class="card">
+    <h2>ประเด็นที่ควรดำเนินการ</h2>
+    <p class="hint">สรุปจากเหตุการณ์ของรายการตามตัวกรอง</p>
+    <div class="callout" id="callout"></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="ch">
+        <div><h2>สาเหตุไฟฟ้าขัดข้อง</h2><p class="hint" id="cHint"></p></div>
+        <div class="seg" role="group" aria-label="วัดจาก"><button type="button" data-m="0" aria-pressed="true">ครั้ง</button><button type="button" data-m="1" aria-pressed="false">ผู้ใช้ไฟ</button><button type="button" data-m="2" aria-pressed="false">CusXTime</button></div>
+      </div>
+      <div class="hbars" id="cause"></div>
+      <div class="legend"><span><i class="sw"></i>Top 20 (ตามตัวกรอง)</span><span><i class="swt"></i>สัดส่วนทั้ง กฟฉ.2</span></div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:16px">
+      <div>
+        <h2>จำนวนเหตุการณ์รายวัน · ตุลาคม 2569</h2>
+        <p class="hint">สีอ่อน = วันเสาร์-อาทิตย์</p>
+        <div class="cols" id="daily"></div><div class="axis" id="dAxis"></div>
+      </div>
+      <div>
+        <h2>ช่วงเวลาที่เกิดเหตุ (ชั่วโมง)</h2>
+        <p class="hint" id="hHint"></p>
+        <div class="cols" id="hourly" style="height:110px"></div><div class="axis" id="hAxis"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note" id="srcNote"></div>
+</div>
+</main>
+<div class="tip" id="tip" hidden></div>
+<div class="toast" id="toast" hidden></div>
+<dialog id="clr" aria-labelledby="clrT" style="width:min(440px,calc(100vw - 32px))">
+  <div class="dlg-h"><button type="button" class="xbtn" id="clrX" aria-label="ปิด" title="ปิด">✕</button><h3 id="clrT">ล้างข้อมูลที่อัปเดต</h3><div id="clrSub"></div></div>
+  <form class="f" id="clrForm" novalidate>
+    <p style="margin:0;font-size:14px">ข้อมูลที่ผู้ใช้อัปเดตทุกรายการและประวัติทั้งหมดจะถูกลบ และกู้คืนไม่ได้ ควรกด Export Excel เก็บไว้ก่อน</p>
+    <label for="clrPw"><span>รหัสผ่าน</span><input id="clrPw" type="password" autocomplete="off"></label>
+    <div class="f-actions"><span class="f-msg" id="clrMsg"></span><button type="button" class="btn ghost lg" id="clrCancel">ยกเลิก</button><button type="submit" class="btn lg danger-solid">ลบข้อมูลทั้งหมด</button></div>
+  </form>
+</dialog>
+<dialog id="dlg" aria-labelledby="dlgT">
+  <div class="dlg-h"><button type="button" class="xbtn" id="bX" aria-label="ปิดหน้าอัปเดต" title="ปิด">✕</button><h3 id="dlgT">อัปเดตการดำเนินงาน</h3><div id="dlgSub"></div><div id="dlgEv"></div></div>
+  <form class="f" id="form" novalidate>
+    <div id="fsWrap" style="display:flex;flex-direction:column;gap:14px"></div>
+    <fieldset>
+      <legend>ของบจ้างเหมาตัดต้นไม้ กรณีพิเศษ</legend>
+      <label for="tStatus"><span>สถานะคำขอ</span><select id="tStatus"><option value="">ไม่ขอ</option><option value="req">เสนอขอ</option><option value="appr">อนุมัติแล้ว</option><option value="done">ดำเนินการแล้ว</option></select></label>
+      <label for="tBud"><span>วงเงิน (บาท)</span><input id="tBud" type="number" min="0" step="1000" inputmode="numeric"></label>
+      <label for="tKm"><span>ระยะทาง (วงจร-กม.)</span><input id="tKm" type="number" min="0" step="0.1" inputmode="decimal"></label>
+    </fieldset>
+    <label for="iNote"><span>หมายเหตุ / ปัญหาที่พบ</span><textarea id="iNote" placeholder="เช่น สาเหตุหลักจากงูพาดสาย ช่วงเสา 45–60 รอวัสดุ Animal guard"></textarea></label>
+    <label for="iBy"><span>ผู้รายงาน / ตำแหน่ง</span><input id="iBy" type="text" placeholder="เช่น หผ.บ. กฟส.เมืองอุบลราชธานี"></label>
+    <div class="f-actions"><span class="f-msg" id="fMsg"></span><button type="button" class="btn ghost lg" id="bCancel">ยกเลิก</button><button type="submit" class="btn lg" id="bSave">บันทึก</button></div>
+  </form>
+</dialog>
+
+<script type="application/json" id="savedData">{}</script>
+<script>
+const PRISTINE = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+const D = {"rows":[{"no":1,"id":"UBV03VB-01","off":"เมืองอุบลราชธานี","fdr":"UBV03","gis":"22CBEA000008979","g":"CB","cnt":11,"dur":3,"cus":71324,"cxt":16605,"ev":[["7014486600","2026-10-01T16:42","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,8354,420,"อุบลราชธานี","","PIC","",""],["7026361211","2026-10-10T05:42","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,8368,903,"กฟจ.อุบลราชธานี","","กระบอกฟิวส์","",""],["7027418464","2026-10-11T08:00","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,8362,419,"กฟจ.อุบลราชธานี","","กระบอกฟิวส์","",""],["7029610477","2026-10-12T15:31","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,8357,459,"อุบลราชธานี","","PIC","",""],["7029701038","2026-10-12T16:52","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","ไม่พบสาเหตุ","ABC",2,2,960,1645,"กฟจ.อุบลราชธานี","","กระบอกฟิวส์","",""],["7035832922","2026-10-17T05:48","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","พบสาเหตุ","ABC",0,0,8345,1707,"อุบลราชธานี","","PIC","",""],["7037422017","2026-10-18T17:06","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","พบสาเหตุ","ABC",0,0,8338,2013,"อบ.","","Fuse link","",""],["7049270474","2026-10-28T07:59","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5060,278,"อบ.","","Fuse link","",""],["7050226318","2026-10-28T17:22","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5060,1251,"กฟจ.อุบลราชธานี","","บุชชิ่ง","",""],["7050237771","2026-10-28T17:26","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",1,1,5060,7225,"กฟจ.อุบลราชธานี","","ไม่ทราบ","",""],["7052873426","2026-10-30T17:14","T/R","ภัยธรรมชาติ","พายุฤดูร้อน/พายุดีเปรสชั่น","ฝนตก ลมแรง","ไม่พบสาเหตุ","ABC",0,0,5060,285,"อุบลราชธานี","","PIC","",""]]},{"no":2,"id":"PYP04VB-01","off":"ยางสีสุราช","fdr":"PYP04","gis":"22CBEA000009284","g":"CB","cnt":7,"dur":1,"cus":71165,"cxt":15960,"ev":[["7016927250","2026-10-03T16:37","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","พบสาเหตุ","ABC",1,1,10194,10194,"กฟอ.พยัคฆภูมิพัสัย","","PIC","",""],["7020030348","2026-10-05T16:45","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","พบสาเหตุ","ABC",0,10,10177,5342,"พยัคฆภูมิพัสัย","","PIC","",""],["7027361777","2026-10-11T07:02","T/R","สัตว์","กระรอก/กระแต/หนู","อากาศชื้น / หมอก","ไม่พบสาเหตุ","ABC",0,0,10180,85,"พภ.","","Fuse link","",""],["7034809266","2026-10-16T09:15","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,10169,85,"กฟอ.พยัคฆภูมิพัสัย","","กระบอกฟิวส์","",""],["7035763454","2026-10-17T01:22","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,10164,85,"พยัคฆภูมิพัสัย","","PIC","",""],["7042355569","2026-10-22T06:35","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,10151,85,"กฟอ.พยัคฆภูมิพัสัย","","PIC","",""],["7050693131","2026-10-29T05:17","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,10130,84,"กฟอ.พยัคฆภูมิพัสัย","","บุชชิ่ง","",""]]},{"no":3,"id":"TPP01VR-101","off":"ตระการพืชผล","fdr":"TPP01","gis":"22RCEA000013294","g":"Recloser","cnt":12,"dur":61,"cus":61681,"cxt":307239,"ev":[["7024996533","2026-10-09T09:49","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศชื้น / หมอก","พบสาเหตุ","ABC",44,44,5144,223880,"ตผ.","","PIC","",""],["7027790493","2026-10-11T14:12","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","ไม่พบสาเหตุ","ABC",17,17,5143,66601,"กฟฟ.อ.ตระการพืชผล","","PIC","",""],["7028174067","2026-10-12T06:35","T/R","สัตว์","งู","อากาศปกติ","พบสาเหตุ","ABC",0,0,5143,431,"ตระการพืชผล","","เปลือย","",""],["7028366673","2026-10-12T09:53","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5143,431,"ตระการพืชผล","","เปลือย","",""],["7028381186","2026-10-12T10:05","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,17,5143,4301,"ตระการพืชผล","","เปลือย","",""],["7028647309","2026-10-12T10:40","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5143,430,"ตระการพืชผล","","เปลือย","",""],["7028658526","2026-10-12T10:50","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,15,5143,2580,"ตระการพืชผล","","PIC","",""],["7029159371","2026-10-12T11:12","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","พบสาเหตุ","ABC",0,1,5143,6863,"ตระการพืชผล","","ใบมีด","",""],["7037707797","2026-10-19T06:38","T/R","สัตว์","นก/ค้างคาว","อากาศชื้น / หมอก","ไม่พบสาเหตุ","ABC",0,0,5135,430,"ตผ.","","กระบอกฟิวส์","",""],["7038254474","2026-10-19T15:10","T/R","สัตว์","งู","อากาศปกติ","พบสาเหตุ","ABC",0,0,5135,431,"กฟฟ.อ.ตระการพืชผล","","บุชชิ่ง","",""],["7045753242","2026-10-25T21:38","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5135,431,"กฟฟ.อ.ตระการพืชผล","","OHGW","",""],["7049101194","2026-10-28T03:40","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5131,430,"กฟฟ.อ.ตระการพืชผล","","OHGW","",""]]},{"no":4,"id":"ANA05VB-01","off":"เมืองอำนาจเจริญ","fdr":"ANA05","gis":"22CBEA000009100","g":"CB","cnt":6,"dur":42,"cus":52686,"cxt":347910,"ev":[["7016117150","2026-10-03T05:49","T/R","วัสดุแปลกปลอม","ว่าว/โคมลอย/ลูกโป่ง/บั้งไฟ","อากาศชื้น / หมอก","พบสาเหตุ","ABC",0,0,11208,2920,"อจ.","","PIC","",""],["7018020026","2026-10-04T16:11","T/L","ภัยธรรมชาติ","พายุโซนร้อน/ใต้ฝุ่น","ฝนตก ฟ้าคะนอง","พบสาเหตุ","ABC",8,8,11208,87856,"กฟจ.อำนาจเจริญ","","PIC","",""],["7030847040","2026-10-13T23:07","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","ไม่พบสาเหตุ","ABC",13,13,1383,18490,"กฟจ.อำนาจเจริญ","","PIC","",""],["7042447251","2026-10-22T08:02","T/R","ภัยธรรมชาติ","พายุฤดูร้อน/พายุดีเปรสชั่น","ฝนตก ลมแรง","พบสาเหตุ","ABC",0,0,6436,60,"-","","OHGW","",""],["7045775981","2026-10-25T22:12","T/R","อุปกรณ์","ชำรุด","ฝนตก","พบสาเหตุ","ABC",0,0,11229,2922,"-","","PIC","",""],["7052191193","2026-10-30T09:09","T/L","อุปกรณ์","ชำรุด","ลมแรง","พบสาเหตุ","ABC",21,21,11222,235662,"-","","PIC","",""]]},{"no":5,"id":"TPP01VR-101","off":"ศรีเมืองใหม่","fdr":"TPP01","gis":"22RCEA000013294","g":"Recloser","cnt":12,"dur":61,"cus":49528,"cxt":246631,"ev":[["7024996533","2026-10-09T09:49","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศชื้น / หมอก","พบสาเหตุ","ABC",44,44,4129,179704,"ตผ.","","PIC","",""],["7027790493","2026-10-11T14:12","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","ไม่พบสาเหตุ","ABC",17,17,4129,53470,"กฟฟ.อ.ตระการพืชผล","","PIC","",""],["7028174067","2026-10-12T06:35","T/R","สัตว์","งู","อากาศปกติ","พบสาเหตุ","ABC",0,0,4129,346,"ตระการพืชผล","","เปลือย","",""],["7028366673","2026-10-12T09:53","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,4129,346,"ตระการพืชผล","","เปลือย","",""],["7028381186","2026-10-12T10:05","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,17,4129,3453,"ตระการพืชผล","","เปลือย","",""],["7028647309","2026-10-12T10:40","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,4129,346,"ตระการพืชผล","","เปลือย","",""],["7028658526","2026-10-12T10:50","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,15,4129,2072,"ตระการพืชผล","","PIC","",""],["7029159371","2026-10-12T11:12","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","พบสาเหตุ","ABC",0,1,4129,5510,"ตระการพืชผล","","ใบมีด","",""],["7037707797","2026-10-19T06:38","T/R","สัตว์","นก/ค้างคาว","อากาศชื้น / หมอก","ไม่พบสาเหตุ","ABC",0,0,4124,346,"ตผ.","","กระบอกฟิวส์","",""],["7038254474","2026-10-19T15:10","T/R","สัตว์","งู","อากาศปกติ","พบสาเหตุ","ABC",0,0,4124,346,"กฟฟ.อ.ตระการพืชผล","","บุชชิ่ง","",""],["7045753242","2026-10-25T21:38","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,4124,346,"กฟฟ.อ.ตระการพืชผล","","OHGW","",""],["7049101194","2026-10-28T03:40","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,4124,346,"กฟฟ.อ.ตระการพืชผล","","OHGW","",""]]},{"no":6,"id":"SJB02VB-01","off":"เมืองศรีสะเกษ","fdr":"SJB02","gis":"22CBEA000009054","g":"CB","cnt":7,"dur":6,"cus":44581,"cxt":38451,"ev":[["7015124476","2026-10-02T09:59","T/L","ต้นไม้","กิ่งไม้หักพาดสาย","อากาศปกติ","พบสาเหตุ","ABC",2,2,6359,12718,"กฟจ.ศรีสะเกษ","","PIC","",""],["7015442863","2026-10-02T14:09","T/L","สัตว์","งู","ฝนตก","พบสาเหตุ","ABC",2,2,6359,12718,"กฟจ.ศรีสะเกษ","","PIC","",""],["7017386842","2026-10-04T07:19","T/R","ภัยธรรมชาติ","พายุฤดูร้อน/พายุดีเปรสชั่น","ฝนตก","พบสาเหตุ","ABC",0,0,6358,64,"กฟจ.ศรีสะเกษ","","PIC","",""],["7026757906","2026-10-10T14:25","T/R","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","ฝนตก ลมแรง","พบสาเหตุ","ABC",0,0,6380,64,"กฟจ.ศรีสะเกษ","","PIC","",""],["7031069242","2026-10-14T05:56","T/R","สัตว์","นก/ค้างคาว","อากาศชื้น / หมอก","ไม่พบสาเหตุ","ABC",0,0,6380,65,"กฟจ.ศรีสะเกษ","","PIC","",""],["7035025555","2026-10-16T12:14","T/L","อุปกรณ์","ชำรุด","อากาศปกติ","พบสาเหตุ","ABC",2,2,6379,12758,"กฟจ.ศรีสะเกษ","","ไม่ทราบ","",""],["7049665443","2026-10-28T12:00","T/R","สัตว์","งู","อากาศปกติ","พบสาเหตุ","ABC",0,0,6366,64,"ศก","","PIC","",""]]},{"no":7,"id":"KSW08VB-01","off":"จตุรพักตร์พิมาน","fdr":"KSW08","gis":"22CBEA000009298","g":"CB","cnt":3,"dur":0,"cus":44182,"cxt":444,"ev":[["7014872931","2026-10-02T06:09","T/R","ภัยธรรมชาติ","พายุฤดูร้อน/พายุดีเปรสชั่น","ฝนตก ลมแรง","ไม่พบสาเหตุ","ABC",0,0,14730,148,"กษตรวิสัย","","OHGW","",""],["7016114278","2026-10-03T05:45","T/R","สัตว์","กระรอก/กระแต/หนู","อากาศชื้น / หมอก","พบสาเหตุ","ABC",0,0,14726,148,"กษ.","","Fuse link","",""],["7022202840","2026-10-07T06:34","T/R","สัตว์","นก/ค้างคาว","อากาศชื้น / หมอก","ไม่พบสาเหตุ","ABC",0,0,14726,148,"กฟอ.เกษตรวิสัย","","PIC","",""]]},{"no":8,"id":"TPP02R-05","off":"กุดข้าวปุ้น","fdr":"TPP02","gis":"22RCEA000012071","g":"Recloser","cnt":8,"dur":171,"cus":43994,"cxt":1128271,"ev":[["7018884953","2026-10-05T02:42","T/L","ภัยธรรมชาติ","พายุโซนร้อน/ใต้ฝุ่น","ฝนตก ลมแรง","พบสาเหตุ","ABC",126,126,7983,1002033,"กฟย.อ.กุดข้าวปุ้น","","บุชชิ่ง","",""],["7033515002","2026-10-15T09:45","T/R","สัตว์","งู","อากาศปกติ","พบสาเหตุ","ABC",0,0,5991,493,"กุดข้าวปุ้น","","เปลือย","",""],["7034394239","2026-10-15T19:12","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",8,8,2010,13828,"กฟย.อ.กุดข้าวปุ้น","","PIC","",""],["7034911699","2026-10-16T10:32","T/R","ต้นไม้","ลมพัดต้นไม้มาแตะสาย","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,7999,659,"กฟย.อ.กุดข้าวปุ้น","","OHGW","",""],["7045763252","2026-10-25T21:51","T/L","ภัยธรรมชาติ","พายุโซนร้อน/ใต้ฝุ่น","อากาศปกติ","ไม่พบสาเหตุ","ABC",11,11,2010,20109,"กฟย.อ.กุดข้าวปุ้น","","OHGW","",""],["7051351310","2026-10-29T14:51","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,7996,658,"กุดข้าวปุ้น","","PIC","",""],["7052603388","2026-10-30T14:03","T/L","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",7,7,7996,54550,"กฟย.อ.กุดข้าวปุ้น","","บุชชิ่ง","",""],["7053545527","2026-10-31T09:58","T/L","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",19,19,2009,35941,"กุดข้าวปุ้น","","SAC","",""]]},{"no":9,"id":"KLA06VB-01","off":"เมืองกาฬสินธุ์","fdr":"KLA06","gis":"22CBEA000009204","g":"CB","cnt":8,"dur":0,"cus":41563,"cxt":3042,"ev":[["7015718222","2026-10-02T17:53","T/R","วัสดุแปลกปลอม","ว่าว/โคมลอย/ลูกโป่ง/บั้งไฟ","ลมแรง","พบสาเหตุ","ABC",0,0,5184,54,"กส.","","Fuse link","",""],["7026792067","2026-10-10T15:13","T/R","ภัยธรรมชาติ","พายุฤดูร้อน/พายุดีเปรสชั่น","ฝนตก ลมแรง","พบสาเหตุ","ABC",0,0,5199,1361,"กส.","","PIC","",""],["7027259670","2026-10-11T02:22","T/R","สัตว์","งู","ลมแรง","ไม่พบสาเหตุ","ABC",0,0,5199,1362,"กส.","","Fuse link","",""],["7038888604","2026-10-19T21:04","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5197,53,"กฟจ.กาฬสินธุ์","","PIC","",""],["7040827680","2026-10-21T10:10","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5196,53,"กฟจ.กาฬสินธุ์","","PIC","",""],["7042360610","2026-10-22T06:42","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5196,53,"กฟจ.กาฬสินธุ์","","PIC","",""],["7043820037","2026-10-23T14:20","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5196,53,"กส.","","PIC","",""],["7045632573","2026-10-25T18:06","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5196,53,"กฟจ.กาฬสินธุ์","","PIC","",""]]},{"no":10,"id":"MDB04R-01","off":"ดงหลวง","fdr":"MDB04","gis":"22RCEA000010592","g":"Recloser","cnt":6,"dur":0,"cus":40380,"cxt":10064,"ev":[["7018866998","2026-10-05T01:51","T/R","ภัยธรรมชาติ","พายุโซนร้อน/ใต้ฝุ่น","อากาศปกติ","พบสาเหตุ","ABC",0,36,7209,4803,"กฟจ.มุกดาหาร","","OHGW","",""],["7020975899","2026-10-06T08:07","T/R","ภัยธรรมชาติ","พายุฤดูร้อน/พายุดีเปรสชั่น","ฝนตก ลมแรง","ไม่พบสาเหตุ","ABC",0,0,7209,600,"มุกดาหาร","","PIC","",""],["7030125405","2026-10-13T05:58","T/R","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",0,89,7243,3013,"กฟจ.มุกดาหาร","","PIC","",""],["7037634928","2026-10-19T00:36","T/R","วัสดุแปลกปลอม","ว่าว/โคมลอย/ลูกโป่ง/บั้งไฟ","ลมแรง","ไม่พบสาเหตุ","ABC",0,0,7242,603,"มห.","","PIC","",""],["7038279104","2026-10-19T15:29","T/R","ต้นไม้","กิ่งไม้หักพาดสาย","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,7242,603,"กฟจ.มุกดาหาร","","ตัวเปลี่ยนแทป","",""],["7044218640","2026-10-24T06:58","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,4235,442,"-","","Fuse link","",""]]},{"no":11,"id":"KLB06VB-01","off":"ดอนจาน","fdr":"KLB06","gis":"22CBEA000008972","g":"CB","cnt":8,"dur":24,"cus":40077,"cxt":13973,"ev":[["7019303264","2026-10-05T10:22","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",7,7,16,110,"กฟจ.กาฬสินธุ์","","PIC","",""],["7027391605","2026-10-11T07:39","T/R","สัตว์","นก/ค้างคาว","อากาศชื้น / หมอก","ไม่พบสาเหตุ","ABC",0,0,6682,56,"กส.","","Fuse link","",""],["7030322595","2026-10-13T10:05","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,6682,56,"กฟจ.กาฬสินธุ์","","PIC","",""],["7035654051","2026-10-16T22:14","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",15,15,17,255,"กาฬสินธุ์","","กระบอกฟิวส์","",""],["7035683460","2026-10-16T23:23","T/L","สัตว์","กระรอก/กระแต/หนู","อากาศปกติ","พบสาเหตุ","ABC",2,2,6664,13328,"กาฬสินธุ์","","PIC","",""],["7036868229","2026-10-18T06:52","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,6679,56,"กฟจ.กาฬสินธุ์","","PIC","",""],["7042951970","2026-10-22T13:59","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,6673,56,"กฟจ.กาฬสินธุ์","","บุชชิ่งแรงต่ำ","",""],["7044295897","2026-10-24T08:44","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","พบสาเหตุ","ABC",0,0,6664,56,"กาฬสินธุ์","","Fuse link","",""]]},{"no":12,"id":"YTA08R-04","off":"ป่าติ้ว","fdr":"YTA08","gis":"22RCEA000015273","g":"Recloser","cnt":9,"dur":27,"cus":39014,"cxt":320775,"ev":[["7021061169","2026-10-06T09:09","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,629,53,"ยโสธร","","PIC","",""],["7024805566","2026-10-09T05:56","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,763,64,"ยโสธร","","เปลือย","",""],["7029469123","2026-10-12T14:05","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,783,66,"ยโสธร","","เปลือย","",""],["7033291547","2026-10-15T00:39","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,761,64,"กฟจ.ยโสธร","","PIC","",""],["7033546400","2026-10-15T10:00","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",27,27,11756,318488,"ยโสธร","","PIC","",""],["7036161366","2026-10-17T12:02","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,11753,986,"ยส.","","Fuse link","",""],["7036869245","2026-10-18T06:53","T/R","สัตว์","งู","อากาศปกติ","พบสาเหตุ","ABC",0,0,489,41,"กฟจ.ยโสธร","","PIC","",""],["7047059275","2026-10-26T15:43","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,454,38,"ยโสธร","","PIC","",""],["7052841913","2026-10-30T17:00","T/R","ภัยธรรมชาติ","พายุฤดูร้อน/พายุดีเปรสชั่น","ฝนตก ลมแรง","ไม่พบสาเหตุ","ABC",0,0,11626,975,"ยโสธร","","OHGW","",""]]},{"no":13,"id":"PYP04VB-01","off":"นาเชือก","fdr":"PYP04","gis":"22CBEA000009284","g":"CB","cnt":7,"dur":1,"cus":37431,"cxt":8372,"ev":[["7016927250","2026-10-03T16:37","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","พบสาเหตุ","ABC",1,1,5344,5344,"กฟอ.พยัคฆภูมิพัสัย","","PIC","",""],["7020030348","2026-10-05T16:45","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","พบสาเหตุ","ABC",0,10,5341,2804,"พยัคฆภูมิพัสัย","","PIC","",""],["7027361777","2026-10-11T07:02","T/R","สัตว์","กระรอก/กระแต/หนู","อากาศชื้น / หมอก","ไม่พบสาเหตุ","ABC",0,0,5353,45,"พภ.","","Fuse link","",""],["7034809266","2026-10-16T09:15","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5352,45,"กฟอ.พยัคฆภูมิพัสัย","","กระบอกฟิวส์","",""],["7035763454","2026-10-17T01:22","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5350,45,"พยัคฆภูมิพัสัย","","PIC","",""],["7042355569","2026-10-22T06:35","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5346,45,"กฟอ.พยัคฆภูมิพัสัย","","PIC","",""],["7050693131","2026-10-29T05:17","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,5345,44,"กฟอ.พยัคฆภูมิพัสัย","","บุชชิ่ง","",""]]},{"no":14,"id":"KNI01VB-01","off":"เขื่องใน","fdr":"KNI01","gis":"22CBEA000009275","g":"CB","cnt":5,"dur":4,"cus":35152,"cxt":16465,"ev":[["7014143036","2026-10-01T12:18","T/L","อุปกรณ์","ชำรุด","อากาศชื้น / หมอก","พบสาเหตุ","ABC",2,2,1390,2423,"ขน.","","ลูกถ้วย","",""],["7023357159","2026-10-08T07:05","T/R","สัตว์","กระรอก/กระแต/หนู","อากาศชื้น / หมอก","พบสาเหตุ","ABC",0,0,11212,42,"ขน.","","PIC","",""],["7031407158","2026-10-14T09:09","TR1","สัตว์","งู","อากาศปกติ","พบสาเหตุ","ABC",0,0,11287,25,"กฟส.เขื่องใน","","PIC","",""],["7040326835","2026-10-20T19:45","T/L","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",2,2,6390,12780,"กฟส.เขื่องใน","","ฟิวส์","",""],["7040427180","2026-10-20T21:21","T/R","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,4873,1195,"กฟส.เขื่องใน","","OHGW","",""]]},{"no":15,"id":"KUK09VB-01","off":"ไพรบึง","fdr":"KUK09","gis":"22CBEA000009314","g":"CB","cnt":4,"dur":46,"cus":32313,"cxt":223280,"ev":[["7039895674","2026-10-20T15:23","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,13133,125,"กฟอ.ขุขันธ์","","PIC","",""],["7040280203","2026-10-20T19:20","T/R","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",0,0,1404,13,"กฟอ.ขุขันธ์","","PIC","",""],["7046058791","2026-10-26T06:23","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,13110,3418,"กฟอ.ขุขันธ์","","OHGW","",""],["7053009841","2026-10-30T19:12","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",46,98,4666,219724,"ขุขันธ์","","PIC","",""]]},{"no":16,"id":"ZTA04R-01","off":"บุณฑริก","fdr":"ZTA04","gis":"22RCEA000000696","g":"Recloser","cnt":8,"dur":67,"cus":31974,"cxt":329378,"ev":[["7030340790","2026-10-13T10:30","T/R","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",0,0,4008,341,"กฟส.อ.บุณฑริก","","PIC","",""],["7030473056","2026-10-13T13:57","T/R","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",1,1,4008,4008,"กฟส.อ.บุณฑริก","","PIC","",""],["7033606227","2026-10-15T11:08","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,4002,340,"บุณฑริก","","PIC","",""],["7044289973","2026-10-24T08:31","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,3992,340,"บุณฑริก","","กระบอกฟิวส์","",""],["7047890339","2026-10-27T09:14","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","ไม่พบสาเหตุ","ABC",2,18,3991,69613,"กฟส.อ.บุณฑริก","","OHGW","",""],["7049396528","2026-10-28T09:27","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",19,19,3991,76510,"บฑ.","","PIC","",""],["7050966927","2026-10-29T09:17","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",27,27,3991,107713,"บุณฑริก","","PIC","",""],["7051475654","2026-10-29T16:25","T/L","ไม่ใช่เหตุการณ์จริง","ไม่ใช่เหตุการณ์จริง","อากาศปกติ","พบสาเหตุ","ABC",18,18,3991,70513,"บุณฑริก","","PIC","",""]]},{"no":17,"id":"KLA05VB-01","off":"กมลาไสย","fdr":"KLA05","gis":"22CBEA000009203","g":"CB","cnt":4,"dur":0,"cus":31519,"cxt":2300,"ev":[["7020396352","2026-10-05T18:42","T/R","ภัยธรรมชาติ","พายุฤดูร้อน/พายุดีเปรสชั่น","ฝนตก ลมแรง","ไม่พบสาเหตุ","ABC",0,0,7880,79,".กาฬสินธุ์","","PIC","",""],["7029824047","2026-10-12T17:47","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,7886,82,"กฟจ.กาฬสินธุ์","","OHGW","",""],["7030124233","2026-10-13T05:54","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,7885,79,"กฟจ.กาฬสินธุ์","","คอนคอนกรีต","",""],["7044722712","2026-10-24T16:57","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","พบสาเหตุ","ABC",0,0,7868,2060,"-","","PIC","",""]]},{"no":18,"id":"SEL05VB-01","off":"เสลภูมิ","fdr":"SEL05","gis":"22CBEA000009115","g":"CB","cnt":2,"dur":0,"cus":31150,"cxt":331,"ev":[["7053464374","2026-10-31T07:52","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,15575,164,"เสลภูมิ","","PIC","",""],["7053576953","2026-10-31T10:23","T/R","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,15575,167,"เสลภูมิ","","กระบอกฟิวส์","",""]]},{"no":19,"id":"DEA07VB-01","off":"ทุ่งศรีอุดม","fdr":"DEA07","gis":"22CBEA000009328","g":"CB","cnt":3,"dur":0,"cus":30803,"cxt":2888,"ev":[["7016026806","2026-10-03T00:01","T/R","ต้นไม้","ลมพัดต้นไม้มาแตะสาย","ลมแรง","พบสาเหตุ","ABC",0,0,10265,2684,"ดอ.","","PIC","",""],["7022859373","2026-10-07T15:12","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,10256,102,"เดชอุดม","","PIC","",""],["7030454133","2026-10-13T13:26","T/R","สัตว์","งู","อากาศชื้น / หมอก","ไม่พบสาเหตุ","ABC",0,0,10282,102,"กฟฟ.อ.เดชอุดม","","PIC","",""]]},{"no":20,"id":"MKA07R-01","off":"เมืองมหาสารคาม","fdr":"MKA07","gis":"2244RC000000029","g":"Recloser","cnt":10,"dur":0,"cus":30618,"cxt":2520,"ev":[["7013838563","2026-10-01T10:37","T/R","สัตว์","งู","อากาศชื้น / หมอก","พบสาเหตุ","ABC",0,0,3064,252,"มค.","","PIC","",""],["7022247623","2026-10-07T06:56","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,3061,252,"โพนทอง","","PIC","",""],["7023154388","2026-10-07T21:16","T/R","อุปกรณ์","ชำรุด","ลมแรง","พบสาเหตุ","ABC",0,0,3061,252,"มค.","","กระบอกฟิวส์","",""],["7026285580","2026-10-09T23:16","T/R","สัตว์","กระรอก/กระแต/หนู","อากาศปกติ","พบสาเหตุ","ABC",0,0,3068,253,"MKA07R-01","รีโคลสเซอร์","ชุด Relay","",""],["7026513625","2026-10-10T08:44","TR1","สัตว์","งู","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,3066,252,"กฟจ.มหาสารคาม","","PIC","",""],["7027269991","2026-10-11T03:11","T/R","สัตว์","งู","ลมแรง","ไม่พบสาเหตุ","ABC",0,0,3066,252,"มค.","","Fuse link","",""],["7033293579","2026-10-15T00:47","T/R","สัตว์","นก/ค้างคาว","อากาศปกติ","พบสาเหตุ","ABC",0,0,3064,252,"MKA07R-01","รีโคลสเซอร์","ชุด Relay","",""],["7042558831","2026-10-22T09:28","T/R","สัตว์","งู","อากาศปกติ","พบสาเหตุ","ABC",0,0,3059,252,"กฟจ.มหาสารคาม","","OHGW","",""],["7047331991","2026-10-26T19:12","T/R","ต้นไม้","ลมพัดต้นไม้มาแตะสาย","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,3055,252,"-","","Fuse link","",""],["7048909569","2026-10-27T20:27","T/R","อุปกรณ์","ชำรุด","อากาศปกติ","ไม่พบสาเหตุ","ABC",0,0,3054,251,"กฟจ.มหาสารคาม","","OHGW","",""]]}],"reg":{"cus":5362027,"cxt":56958488,"events":3903,"offices":119,"typeEv":{"Drop out Fuse":2883,"Recloser":681,"CB":339},"typeCus":{"CB":[2140341,21354667],"Drop out Fuse":[686216,17619198],"Recloser":[2535470,17984623]},"cause":{"ฉุกเฉิน":[30,4866,61461],"ต้นไม้":[271,342384,1776521],"บุคคลภายนอก":[6,1988,29320],"พนักงานกฟภ.":[3,2001,2353],"ภัยธรรมชาติ":[575,892146,7011337],"ยานพาหนะ":[1,9572,2496],"วัสดุแปลกปลอม":[104,166781,418577],"สภาพสิ่งแวดล้อม":[117,43523,463112],"สัตว์":[1835,2297257,8675640],"อุบัติเหตุร้ายแรง":[1,5439,76146],"อุปกรณ์":[714,846428,3778237],"แหล่งผลิตขัดข้อง":[1,0,0],"โหลดเกินพิกัด":[8,1743,17753],"ไม่ใช่เหตุการณ์จริง":[237,747899,34645535]}},"dev":{"UBV03VB-01":{"n":11,"cus":71324,"cxt":16605,"offs":[["เมืองอุบลราชธานี",11,71324,16605],["วารินชำราบ",10,0,0],["เขื่องใน",6,0,0]]},"PYP04VB-01":{"n":7,"cus":129976,"cxt":29100,"offs":[["ยางสีสุราช",7,71165,15960],["นาเชือก",7,37431,8372],["พยัคฆภูมิพิสัย",7,19398,4326],["นาดูน",7,1982,442]]},"TPP01VR-101":{"n":12,"cus":111209,"cxt":553870,"offs":[["ตระการพืชผล",12,61681,307239],["ศรีเมืองใหม่",12,49528,246631]]},"ANA05VB-01":{"n":6,"cus":54832,"cxt":364877,"offs":[["เมืองอำนาจเจริญ",6,52686,347910],["หัวตะพาน",5,2146,16967]]},"SJB02VB-01":{"n":7,"cus":44581,"cxt":38451,"offs":[["เมืองศรีสะเกษ",7,44581,38451]]},"KSW08VB-01":{"n":3,"cus":51771,"cxt":519,"offs":[["จตุรพักตรพิมาน",3,44182,444],["เกษตรวิสัย",3,7589,75]]},"TPP02R-05":{"n":8,"cus":51899,"cxt":1317250,"offs":[["กุดข้าวปุ้น",8,43994,1128271],["ตระการพืชผล",7,7905,188979],["ปทุมราชวงศา",5,0,0]]},"KLA06VB-01":{"n":8,"cus":41563,"cxt":3042,"offs":[["เมืองกาฬสินธุ์",8,41563,3042]]},"MDB04R-01":{"n":6,"cus":51565,"cxt":12798,"offs":[["ดงหลวง",6,40380,10064],["กกตูม",6,7195,1795],["เมืองมุกดาหาร",6,3990,939]]},"KLB06VB-01":{"n":8,"cus":53441,"cxt":36345,"offs":[["ดอนจาน",8,40077,13973],["เมืองกาฬสินธุ์",8,13364,22372],["โพธิ์ชัย",6,0,0]]},"YTA08R-04":{"n":9,"cus":42656,"cxt":342309,"offs":[["ป่าติ้ว",9,39014,320775],["เมืองยโสธร",7,3153,17090],["ไทยเจริญ",3,489,4444],["เมืองอำนาจเจริญ",3,0,0]]},"KNI01VB-01":{"n":5,"cus":35152,"cxt":16465,"offs":[["เขื่องใน",5,35152,16465],["กันทรารมย์",3,0,0],["ค้อวัง",3,0,0]]},"KUK09VB-01":{"n":4,"cus":40689,"cxt":271599,"offs":[["ไพรบึง",4,32313,223280],["ขุขันธ์",4,4671,23277],["ขุนหาญ",3,3639,25033],["ศรีรัตนะ",2,66,9]]},"ZTA04R-01":{"n":8,"cus":31974,"cxt":329378,"offs":[["บุณฑริก",8,31974,329378]]},"KLA05VB-01":{"n":4,"cus":37048,"cxt":2703,"offs":[["กมลาไสย",4,31519,2300],["เมืองกาฬสินธุ์",4,5382,393],["จังหาร",4,147,10]]},"SEL05VB-01":{"n":2,"cus":36168,"cxt":384,"offs":[["เสลภูมิ",2,31150,331],["หนองพอก",2,5018,53],["โพนทอง",2,0,0]]},"DEA07VB-01":{"n":4,"cus":60269,"cxt":96169,"offs":[["ทุ่งศรีอุดม",3,30803,2888],["เดชอุดม",4,19182,25730],["นาเยีย",4,5619,36242],["วารินชำราบ",4,3565,31205],["น้ำขุ่น",3,1100,104]]},"MKA07R-01":{"n":10,"cus":39843,"cxt":3280,"offs":[["เมืองมหาสารคาม",10,30618,2520],["กันทรวิชัย",10,9225,760]]}},"evo":{"7014486600":[["เมืองอุบลราชธานี",8354],["เขื่องใน",0],["วารินชำราบ",0]],"7026361211":[["เมืองอุบลราชธานี",8368],["เขื่องใน",0],["วารินชำราบ",0]],"7027418464":[["เมืองอุบลราชธานี",8362],["เขื่องใน",0],["วารินชำราบ",0]],"7029610477":[["เมืองอุบลราชธานี",8357],["เขื่องใน",0],["วารินชำราบ",0]],"7029701038":[["เมืองอุบลราชธานี",960]],"7035832922":[["เมืองอุบลราชธานี",8345],["เขื่องใน",0],["วารินชำราบ",0]],"7037422017":[["เมืองอุบลราชธานี",8338],["เขื่องใน",0],["วารินชำราบ",0]],"7049270474":[["เมืองอุบลราชธานี",5060],["วารินชำราบ",0]],"7050226318":[["เมืองอุบลราชธานี",5060],["วารินชำราบ",0]],"7050237771":[["เมืองอุบลราชธานี",5060],["วารินชำราบ",0]],"7052873426":[["เมืองอุบลราชธานี",5060],["วารินชำราบ",0]],"7016927250":[["พยัคฆภูมิพิสัย",2762],["นาเชือก",5344],["ยางสีสุราช",10194],["นาดูน",283]],"7020030348":[["พยัคฆภูมิพิสัย",2761],["นาเชือก",5341],["ยางสีสุราช",10177],["นาดูน",283]],"7027361777":[["พยัคฆภูมิพิสัย",2779],["นาเชือก",5353],["ยางสีสุราช",10180],["นาดูน",284]],"7034809266":[["พยัคฆภูมิพิสัย",2778],["นาเชือก",5352],["ยางสีสุราช",10169],["นาดูน",283]],"7035763454":[["พยัคฆภูมิพิสัย",2778],["นาเชือก",5350],["ยางสีสุราช",10164],["นาดูน",283]],"7042355569":[["พยัคฆภูมิพิสัย",2773],["นาเชือก",5346],["ยางสีสุราช",10151],["นาดูน",283]],"7050693131":[["พยัคฆภูมิพิสัย",2767],["นาเชือก",5345],["ยางสีสุราช",10130],["นาดูน",283]],"7024996533":[["ตระการพืชผล",5144],["ศรีเมืองใหม่",4129]],"7027790493":[["ตระการพืชผล",5143],["ศรีเมืองใหม่",4129]],"7028174067":[["ตระการพืชผล",5143],["ศรีเมืองใหม่",4129]],"7028366673":[["ตระการพืชผล",5143],["ศรีเมืองใหม่",4129]],"7028381186":[["ตระการพืชผล",5143],["ศรีเมืองใหม่",4129]],"7028647309":[["ตระการพืชผล",5143],["ศรีเมืองใหม่",4129]],"7028658526":[["ตระการพืชผล",5143],["ศรีเมืองใหม่",4129]],"7029159371":[["ตระการพืชผล",5143],["ศรีเมืองใหม่",4129]],"7037707797":[["ตระการพืชผล",5135],["ศรีเมืองใหม่",4124]],"7038254474":[["ตระการพืชผล",5135],["ศรีเมืองใหม่",4124]],"7045753242":[["ตระการพืชผล",5135],["ศรีเมืองใหม่",4124]],"7049101194":[["ตระการพืชผล",5131],["ศรีเมืองใหม่",4124]],"7016117150":[["เมืองอำนาจเจริญ",11208],["หัวตะพาน",487]],"7018020026":[["เมืองอำนาจเจริญ",11208],["หัวตะพาน",485]],"7030847040":[["เมืองอำนาจเจริญ",1383],["หัวตะพาน",204]],"7042447251":[["เมืองอำนาจเจริญ",6436]],"7045775981":[["เมืองอำนาจเจริญ",11229],["หัวตะพาน",485]],"7052191193":[["เมืองอำนาจเจริญ",11222],["หัวตะพาน",485]],"7015124476":[["เมืองศรีสะเกษ",6359]],"7015442863":[["เมืองศรีสะเกษ",6359]],"7017386842":[["เมืองศรีสะเกษ",6358]],"7026757906":[["เมืองศรีสะเกษ",6380]],"7031069242":[["เมืองศรีสะเกษ",6380]],"7035025555":[["เมืองศรีสะเกษ",6379]],"7049665443":[["เมืองศรีสะเกษ",6366]],"7014872931":[["จตุรพักตรพิมาน",14730],["เกษตรวิสัย",2530]],"7016114278":[["จตุรพักตรพิมาน",14726],["เกษตรวิสัย",2530]],"7022202840":[["จตุรพักตรพิมาน",14726],["เกษตรวิสัย",2529]],"7018884953":[["ปทุมราชวงศา",0],["ตระการพืชผล",1130],["กุดข้าวปุ้น",7983]],"7033515002":[["ปทุมราชวงศา",0],["กุดข้าวปุ้น",5991]],"7034394239":[["ตระการพืชผล",1130],["กุดข้าวปุ้น",2010]],"7034911699":[["ปทุมราชวงศา",0],["ตระการพืชผล",1130],["กุดข้าวปุ้น",7999]],"7045763252":[["ตระการพืชผล",1130],["กุดข้าวปุ้น",2010]],"7051351310":[["ปทุมราชวงศา",0],["ตระการพืชผล",1129],["กุดข้าวปุ้น",7996]],"7052603388":[["ปทุมราชวงศา",0],["ตระการพืชผล",1128],["กุดข้าวปุ้น",7996]],"7053545527":[["ตระการพืชผล",1128],["กุดข้าวปุ้น",2009]],"7015718222":[["เมืองกาฬสินธุ์",5184]],"7026792067":[["เมืองกาฬสินธุ์",5199]],"7027259670":[["เมืองกาฬสินธุ์",5199]],"7038888604":[["เมืองกาฬสินธุ์",5197]],"7040827680":[["เมืองกาฬสินธุ์",5196]],"7042360610":[["เมืองกาฬสินธุ์",5196]],"7043820037":[["เมืองกาฬสินธุ์",5196]],"7045632573":[["เมืองกาฬสินธุ์",5196]],"7018866998":[["เมืองมุกดาหาร",663],["ดงหลวง",7209],["กกตูม",1195]],"7020975899":[["เมืองมุกดาหาร",663],["ดงหลวง",7209],["กกตูม",1195]],"7030125405":[["เมืองมุกดาหาร",666],["ดงหลวง",7243],["กกตูม",1202]],"7037634928":[["เมืองมุกดาหาร",666],["ดงหลวง",7242],["กกตูม",1201]],"7038279104":[["เมืองมุกดาหาร",666],["ดงหลวง",7242],["กกตูม",1201]],"7044218640":[["เมืองมุกดาหาร",666],["ดงหลวง",4235],["กกตูม",1201]],"7019303264":[["เมืองกาฬสินธุ์",911],["ดอนจาน",16]],"7027391605":[["เมืองกาฬสินธุ์",2085],["ดอนจาน",6682],["โพธิ์ชัย",0]],"7030322595":[["เมืองกาฬสินธุ์",2079],["ดอนจาน",6682],["โพธิ์ชัย",0]],"7035654051":[["เมืองกาฬสินธุ์",911],["ดอนจาน",17]],"7035683460":[["เมืองกาฬสินธุ์",1166],["ดอนจาน",6664],["โพธิ์ชัย",0]],"7036868229":[["เมืองกาฬสินธุ์",2075],["ดอนจาน",6679],["โพธิ์ชัย",0]],"7042951970":[["เมืองกาฬสินธุ์",2070],["ดอนจาน",6673],["โพธิ์ชัย",0]],"7044295897":[["เมืองกาฬสินธุ์",2067],["ดอนจาน",6664],["โพธิ์ชัย",0]],"7021061169":[["เมืองยโสธร",252],["ป่าติ้ว",629]],"7024805566":[["เมืองยโสธร",569],["ป่าติ้ว",763]],"7029469123":[["ป่าติ้ว",783]],"7033291547":[["ป่าติ้ว",761]],"7033546400":[["เมืองยโสธร",623],["ป่าติ้ว",11756],["ไทยเจริญ",163],["เมืองอำนาจเจริญ",0]],"7036161366":[["เมืองยโสธร",622],["ป่าติ้ว",11753],["ไทยเจริญ",163],["เมืองอำนาจเจริญ",0]],"7036869245":[["เมืองยโสธร",48],["ป่าติ้ว",489]],"7047059275":[["เมืองยโสธร",417],["ป่าติ้ว",454]],"7052841913":[["เมืองยโสธร",622],["ป่าติ้ว",11626],["ไทยเจริญ",163],["เมืองอำนาจเจริญ",0]],"7014143036":[["เขื่องใน",1390]],"7023357159":[["เขื่องใน",11212],["ค้อวัง",0],["กันทรารมย์",0]],"7031407158":[["เขื่องใน",11287],["ค้อวัง",0],["กันทรารมย์",0]],"7040326835":[["เขื่องใน",6390],["ค้อวัง",0],["กันทรารมย์",0]],"7040427180":[["เขื่องใน",4873]],"7039895674":[["ขุขันธ์",1498],["ศรีรัตนะ",33],["ขุนหาญ",1214],["ไพรบึง",13133]],"7040280203":[["ขุขันธ์",220],["ไพรบึง",1404]],"7046058791":[["ขุขันธ์",1491],["ศรีรัตนะ",33],["ขุนหาญ",1213],["ไพรบึง",13110]],"7053009841":[["ขุขันธ์",1462],["ขุนหาญ",1212],["ไพรบึง",4666]],"7030340790":[["บุณฑริก",4008]],"7030473056":[["บุณฑริก",4008]],"7033606227":[["บุณฑริก",4002]],"7044289973":[["บุณฑริก",3992]],"7047890339":[["บุณฑริก",3991]],"7049396528":[["บุณฑริก",3991]],"7050966927":[["บุณฑริก",3991]],"7051475654":[["บุณฑริก",3991]],"7020396352":[["เมืองกาฬสินธุ์",1345],["กมลาไสย",7880],["จังหาร",36]],"7029824047":[["เมืองกาฬสินธุ์",1346],["กมลาไสย",7886],["จังหาร",37]],"7030124233":[["เมืองกาฬสินธุ์",1346],["กมลาไสย",7885],["จังหาร",37]],"7044722712":[["เมืองกาฬสินธุ์",1345],["กมลาไสย",7868],["จังหาร",37]],"7053464374":[["เสลภูมิ",15575],["โพนทอง",0],["หนองพอก",2510]],"7053576953":[["เสลภูมิ",15575],["โพนทอง",0],["หนองพอก",2508]],"7016026806":[["เดชอุดม",6371],["ทุ่งศรีอุดม",10265],["นาเยีย",1530],["น้ำขุ่น",367],["วารินชำราบ",892]],"7022859373":[["เดชอุดม",6368],["ทุ่งศรีอุดม",10256],["นาเยีย",1526],["น้ำขุ่น",366],["วารินชำราบ",891]],"7024909406":[["เดชอุดม",690],["นาเยีย",1032],["วารินชำราบ",892]],"7030454133":[["เดชอุดม",5753],["ทุ่งศรีอุดม",10282],["นาเยีย",1531],["น้ำขุ่น",367],["วารินชำราบ",890]],"7013838563":[["เมืองมหาสารคาม",3064],["กันทรวิชัย",922]],"7022247623":[["เมืองมหาสารคาม",3061],["กันทรวิชัย",919]],"7023154388":[["เมืองมหาสารคาม",3061],["กันทรวิชัย",919]],"7026285580":[["เมืองมหาสารคาม",3068],["กันทรวิชัย",925]],"7026513625":[["เมืองมหาสารคาม",3066],["กันทรวิชัย",925]],"7027269991":[["เมืองมหาสารคาม",3066],["กันทรวิชัย",925]],"7033293579":[["เมืองมหาสารคาม",3064],["กันทรวิชัย",924]],"7042558831":[["เมืองมหาสารคาม",3059],["กันทรวิชัย",924]],"7047331991":[["เมืองมหาสารคาม",3055],["กันทรวิชัย",921]],"7048909569":[["เมืองมหาสารคาม",3054],["กันทรวิชัย",921]]}};
+const T20 = D.rows, REG = D.reg, DEV = D.dev, EVO = D.evo;
+const LIM = {CB:9, Recloser:10};
+const E = {ev:0,dt:1,st:2,cause:3,sub:4,wx:5,known:6,ph:7,d1:8,d2:9,cus:10,cxt:11,site:12,fdev:13,dmg:14,fix:15,relay:16};
+const PM = {
+  'สัตว์':['m','ติดตั้งอุปกรณ์ป้องกันสัตว์ (Animal guard / Cover) ที่จุดต่อและบุชชิ่ง'],
+  'อุปกรณ์':['l','ประมาณงานเปลี่ยนอุปกรณ์ทดแทนที่เสื่อมสภาพ'],
+  'ต้นไม้':['s','Patrol ตัด/ริดกิ่งไม้ในแนวสาย'],
+  'วัสดุแปลกปลอม':['s','Patrol เก็บวัสดุแปลกปลอมในแนวสาย'],
+  'ภัยธรรมชาติ':['s','Patrol หลังพายุ ตรวจ Arrester และการต่อลงดิน'],
+  'สภาพสิ่งแวดล้อม':['l','ทบทวนฉนวน/ลูกถ้วยในพื้นที่มลภาวะ'],
+  'ไม่ใช่เหตุการณ์จริง':['x','ตรวจสอบการบันทึกเหตุการณ์ในรายงาน 52 ก่อนนับเข้าดัชนี']
+};
+const TERM = {s:['ระยะสั้น','b'], m:['ระยะกลาง','a'], l:['ระยะยาว','r'], x:['ข้อมูล','a']};
+const fmt = n => Number(n||0).toLocaleString('th-TH');
+const fmtM = n => n>=1e6 ? (n/1e6).toLocaleString('th-TH',{maximumFractionDigits:2})+' ล้าน' : fmt(n);
+const pc = (a,b,d=1) => b ? (a/b*100).toLocaleString('th-TH',{maximumFractionDigits:d,minimumFractionDigits:d})+'%' : '0%';
+const el = (tag, attrs={}, ...kids) => { const e=document.createElement(tag); for(const [k,v] of Object.entries(attrs)){ if(k==='class') e.className=v; else if(k==='text') e.textContent=v; else if(k==='style') e.setAttribute('style',v); else if(k.startsWith('on')) e.addEventListener(k.slice(2),v); else if(v!==false&&v!=null) e.setAttribute(k,v);} for(const c of kids){ if(c==null||c===false) continue; e.append(c.nodeType?c:document.createTextNode(c)); } return e; };
+const $ = id => document.getElementById(id);
+const thD = s => { const d=new Date(s); return d.toLocaleDateString('th-TH',{day:'numeric',month:'short'})+' '+s.slice(11,16); };
+const count = (arr,f) => arr.reduce((m,x)=>{const k=f(x); m[k]=(m[k]||0)+1; return m;},{});
+const topCause = r => { const c=count(r.ev,e=>e[E.cause]); return Object.entries(c).sort((a,b)=>b[1]-a[1]); };
+
+const state = {off:'', typ:'', sort:'cus', m:0, open:null};
+try{ const s=JSON.parse(localStorage.getItem('t20a')||'{}'); Object.assign(state, {off:s.off||'', typ:s.typ||'', sort:s.sort||'cus', m:s.m||0}); }catch(e){}
+const save = () => { try{ localStorage.setItem('t20a', JSON.stringify({off:state.off,typ:state.typ,sort:state.sort,m:state.m})); }catch(e){} };
+
+const offices=[...new Set(T20.map(r=>r.off))].sort((a,b)=>a.localeCompare(b,'th'));
+offices.forEach(o=>$('fOff').append(el('option',{value:o,text:'กฟส.'+o})));
+$('fOff').value=state.off; $('fTyp').value=state.typ;
+$('fOff').onchange=e=>{state.off=e.target.value; state.open=null; save(); render();};
+$('fTyp').onchange=e=>{state.typ=e.target.value; state.open=null; save(); render();};
+document.querySelectorAll('[data-sort]').forEach(b=>b.onclick=()=>{state.sort=b.dataset.sort; save(); render();});
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{state.m=+b.dataset.m; save(); render();});
+
+$('mDev').textContent = new Set(T20.map(r=>r.id)).size;
+$('mFdr').textContent = new Set(T20.map(r=>r.fdr)).size;
+$('mEv').textContent = fmt(new Set(T20.flatMap(r=>r.ev.map(e=>e[0]))).size);
+$('mReg').textContent = fmt(REG.events); $('mOffs').textContent = REG.offices;
+
+const tip=$('tip');
+function showTip(e, html){ tip.replaceChildren(...html); tip.hidden=false; const r=(e.currentTarget||e.target).getBoundingClientRect(); const x=Math.min(window.innerWidth-tip.offsetWidth-8, Math.max(8, r.left+r.width/2-tip.offsetWidth/2)); const y=r.top-tip.offsetHeight-8; tip.style.left=x+'px'; tip.style.top=(y<8? r.bottom+8 : y)+'px'; }
+const hideTip=()=>tip.hidden=true;
+window.addEventListener('scroll',hideTip,{passive:true});
+
+function render(){
+  const rows=T20.filter(r=>(!state.off||r.off===state.off)&&(!state.typ||r.g===state.typ));
+  const evs=rows.flatMap(r=>r.ev);
+  document.querySelectorAll('[data-sort]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sort===state.sort)));
+  document.querySelectorAll('[data-m]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.m===state.m)));
+  $('fCnt').textContent = `แสดง ${rows.length} จาก 20 รายการ`;
+
+  const cus=rows.reduce((s,r)=>s+r.cus,0), cxt=rows.reduce((s,r)=>s+r.cxt,0), cnt=rows.reduce((s,r)=>s+r.cnt,0);
+  $('kCus').replaceChildren(fmtM(cus)); $('kCusBar').style.width=(cus/REG.cus*100)+'%';
+  $('kCusSub').textContent = `${pc(cus,REG.cus)} ของทั้ง กฟฉ.2 (${fmtM(REG.cus)} ราย)`;
+  $('kCxt').replaceChildren(fmtM(cxt)); $('kCxtBar').style.width=(cxt/REG.cxt*100)+'%';
+  $('kCxtSub').textContent = `${pc(cxt,REG.cxt)} ของทั้ง กฟฉ.2 (${fmtM(REG.cxt)})`;
+  const over=rows.filter(r=>r.cnt>=LIM[r.g]).length, tl=evs.filter(e=>e[E.st]==='T/L').length;
+  $('kCnt').replaceChildren(fmt(cnt), el('small',{text:' ครั้ง'}));
+  $('kCntSub').textContent = `เกินเกณฑ์ทั้งปี ${over} รายการ · Trip Lockout ${tl} ครั้ง`;
+  const unk=evs.filter(e=>e[E.known]==='ไม่พบสาเหตุ').length;
+  $('kUnk').replaceChildren(pc(unk,evs.length,0));
+  $('kUnkSub').textContent = `${fmt(unk)} จาก ${fmt(evs.length)} ครั้ง ต้อง Patrol หาจุดเสี่ยง`;
+
+  // ranking table
+  const tb=$('tb'); tb.replaceChildren();
+  const maxC=Math.max(...T20.map(r=>r.cus)), maxX=Math.max(...T20.map(r=>r.cxt));
+  const list=[...rows].sort((a,b)=>b[state.sort]-a[state.sort]||a.no-b.no);
+  if(!list.length) tb.append(el('tr',{},el('td',{colspan:9,class:'sm',style:'text-align:center;padding:22px',text:'ไม่มีรายการตามตัวกรอง'})));
+  list.forEach(r=>{
+    const key=r.no, open=state.open===key, tc=topCause(r)[0];
+    const tr=el('tr',{class:'row',tabindex:0,'aria-expanded':String(open)},
+      el('td',{class:'n',text:r.no}),
+      el('td',{}, el('div',{class:'dev',text:r.id}), el('div',{class:'sm'}, el('span',{class:'chip '+(r.g==='CB'?'cb':'rc'),text:r.g}),' '+r.fdr)),
+      el('td',{class:'offl'}, ...[...DEV[r.id].offs].sort((a,b)=>(b[0]===r.off)-(a[0]===r.off)).map(([o,n,c])=>el('div',{class:(o===r.off?'me':'')+(c===0?' z':''),title:`${n} ครั้ง · ${fmt(c)} ราย`}, o, el('span',{text:' '+fmt(c)})))),
+      el('td',{class:'n'}, el('span',{class:r.cnt>=LIM[r.g]?'over':'',text:fmt(r.cnt)})),
+      el('td',{class:'n',text:fmt(r.dur)}),
+      el('td',{}, ibar(r.cus,maxC,REG.cus,'')),
+      el('td',{}, ibar(r.cxt,maxX,REG.cxt,'s')),
+      el('td',{}, el('div',{text:tc[0]}), el('div',{class:'sm',text:`${tc[1]} จาก ${r.cnt} ครั้ง`})),
+      el('td',{}, updBtn(r,null), docs[rid(r)] ? el('span',{class:'done-t',text:`✓ ${hist(r).length} ครั้ง · `+new Date(docs[rid(r)].updatedAt).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}) : null));
+    const tog=()=>{state.open=open?null:key; render();};
+    tr.onclick=tog; tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog();}};
+    tb.append(tr);
+    if(open) tb.append(el('tr',{class:'det'}, el('td',{colspan:9}, detail(r))));
+  });
+
+  renderCallout(rows,evs);
+  renderCause(evs);
+  renderTime(evs);
+}
+function ibar(v,max,tot,cls){
+  return el('div',{class:'ibar'}, el('b',{text:fmt(v)}), el('div',{class:'t '+cls}, el('i',{style:`width:${v/max*100}%`})), el('em',{text:pc(v,tot,2)}));
+}
+function detail(r){
+  const causes=topCause(r);
+  const sub=count(r.ev,e=>e[E.cause]+' · '+(e[E.sub]||'–'));
+  const left=el('div',{class:'dbox'},
+    el('h4',{text:'แนวทาง PM ตามสาเหตุที่บันทึก'}),
+    el('div',{class:'pm'}, ...causes.filter(([c])=>PM[c]).map(([c,n])=>{const [t,txt]=PM[c]; return el('div',{}, el('span',{class:'tag '+TERM[t][1],text:TERM[t][0]}), el('span',{}, txt+' ', el('span',{class:'sm',text:`(${c} ${n} ครั้ง)`})));})),
+    el('h4',{text:'สาเหตุย่อย'}),
+    el('div',{style:'display:flex;flex-wrap:wrap;gap:6px'}, ...Object.entries(sub).sort((a,b)=>b[1]-a[1]).map(([k,n])=>el('span',{class:'chip',text:`${k} ${n}`}))),
+    trackBox(r),
+    el('div',{class:'sm',text:`GIS tag ${r.gis} · ฟีดเดอร์ ${r.fdr} · ไม่พบสาเหตุ ${r.ev.filter(e=>e[E.known]==='ไม่พบสาเหตุ').length} จาก ${r.cnt} ครั้ง`}));
+  const t=el('table',{class:'ev'}, el('thead',{}, el('tr',{}, ...['วันเวลา','สถานะ','สาเหตุ','สภาพอากาศ','อุปกรณ์ที่เสียหาย','นาที','ผู้ใช้ไฟ','CusXTime','กฟฟ. อื่นที่กระทบในเหตุการณ์นี้','เลขเหตุการณ์'].map((h,i)=>el('th',{class:i>=5&&i<=7?'n':'',text:h})))));
+  const b=el('tbody'); t.append(b);
+  r.ev.forEach(e=>b.append(el('tr',{},
+    el('td',{text:thD(e[E.dt])}),
+    el('td',{}, el('span',{class:'st'+(e[E.st]==='T/L'?' tl':''),text:e[E.st]}), e[E.ph]?' '+e[E.ph]:''),
+    el('td',{class:'w'}, el('span',{class:e[E.cause]==='ไม่ใช่เหตุการณ์จริง'?'fake':'',text:e[E.cause]}), el('div',{class:'sm',text:(e[E.sub]&&e[E.sub]!==e[E.cause]?e[E.sub]+' · ':'')+e[E.known]})),
+    el('td',{text:e[E.wx]}),
+    el('td',{text:[e[E.fdev],e[E.dmg]].filter(Boolean).join(' / ')||'–'}),
+    el('td',{class:'n',text:fmt(e[E.d1])}),
+    el('td',{class:'n',text:fmt(e[E.cus])}),
+    el('td',{class:'n',text:fmt(e[E.cxt])}),
+    el('td',{class:'oth'}, ...others(e[E.ev], r.off)),
+    el('td',{class:'sm',text:e[E.ev]}))));
+  return el('div',{class:'dcol'}, el('div',{class:'dgrid'}, left, offBox(r)), el('div',{class:'dbox'}, el('h4',{text:`เหตุการณ์ ${r.cnt} ครั้งของ ${r.id} ที่กระทบ กฟส.${r.off}`}), el('div',{class:'tbl-wrap'},t)));
+}
+function others(ev, me){
+  const o=(EVO[ev]||[]).filter(x=>x[0]!==me);
+  if(!o.length) return ['–'];
+  const out=[]; o.forEach((x,i)=>{ if(i) out.push(' · '); out.push(x[0]+' ', el('b',{text:fmt(x[1])})); });
+  return out;
+}
+function offBox(r){
+  const d=DEV[r.id], max=Math.max(...d.offs.map(o=>o[2]),1), maxX=Math.max(...d.offs.map(o=>o[3]),1);
+  const t=el('table',{class:'offs'}, el('thead',{}, el('tr',{}, el('th',{text:'กฟฟ.'}), el('th',{class:'n',text:'ครั้ง'}), el('th',{text:'ผู้ใช้ไฟ (ราย) · % ของอุปกรณ์'}), el('th',{text:'CusXTime · % ของอุปกรณ์'}), el('th',{text:'อันดับใน Top 20'}))));
+  const b=el('tbody'); t.append(b);
+  d.offs.forEach(([o,n,c,x])=>{
+    const inTop=T20.find(q=>q.id===r.id&&q.off===o);
+    b.append(el('tr',{class:(o===r.off?'me':'')+(c===0?' zero':'')},
+      el('td',{}, 'กฟส.'+o, c===0?el('div',{class:'sm',text:'มีบันทึก แต่ไม่มีผู้ใช้ไฟได้รับผลกระทบ'}):null),
+      el('td',{class:'n',text:fmt(n)}),
+      el('td',{}, ibar2(c,max,d.cus,'')),
+      el('td',{}, ibar2(x,maxX,d.cxt,'s')),
+      el('td',{class:'sm',text:inTop?'อันดับ '+inTop.no:'–'})));
+  });
+  b.append(el('tr',{}, el('td',{}, el('b',{text:'รวมทั้งอุปกรณ์'})), el('td',{class:'n'}, el('b',{text:fmt(d.n)})), el('td',{}, el('b',{text:fmt(d.cus)+' ราย'})), el('td',{}, el('b',{text:fmt(d.cxt)})), el('td',{})));
+  return el('div',{class:'dbox'},
+    el('h4',{text:`กฟฟ. ทั้งหมดที่ได้รับผลกระทบจาก ${r.id} · ${d.offs.length} แห่ง`}),
+    el('div',{class:'sm',text:`ครั้ง = จำนวนเหตุการณ์ที่ กฟฟ. นั้นถูกบันทึกในรายงาน 52 · รวมทั้งอุปกรณ์นับเหตุการณ์ไม่ซ้ำ ${d.n} ครั้ง`}),
+    el('div',{class:'tbl-wrap'},t));
+}
+function ibar2(v,max,tot,cls){
+  return el('div',{class:'ibar'}, el('b',{text:fmt(v)}), el('div',{class:'t '+cls}, el('i',{style:`width:${v/max*100}%`})), el('em',{text:pc(v,tot,0)}));
+}
+function renderCallout(rows,evs){
+  const box=$('callout'); box.replaceChildren();
+  if(!evs.length){ box.append(el('p',{class:'sm',text:'ไม่มีรายการตามตัวกรอง'})); return; }
+  const ani=evs.filter(e=>e[E.cause]==='สัตว์'), aniRows=rows.filter(r=>r.ev.some(e=>e[E.cause]==='สัตว์'));
+  const eq=evs.filter(e=>e[E.cause]==='อุปกรณ์'), eqRows=rows.filter(r=>r.ev.some(e=>e[E.cause]==='อุปกรณ์'));
+  const fake=evs.filter(e=>e[E.cause]==='ไม่ใช่เหตุการณ์จริง'), fakeRows=rows.filter(r=>r.ev.some(e=>e[E.cause]==='ไม่ใช่เหตุการณ์จริง'));
+  const sumC=a=>a.reduce((s,e)=>s+e[E.cus],0), sumX=a=>a.reduce((s,e)=>s+e[E.cxt],0);
+  const allC=sumC(evs), allX=sumX(evs);
+  const names=a=>a.slice(0,4).map(r=>r.id).join(', ')+(a.length>4?` และอีก ${a.length-4}`:'');
+  const card=(tag,cls,title,p,s)=>el('div',{class:'cl'}, el('h3',{}, el('span',{class:'tag '+cls,text:tag}), title), el('p',{text:p}), el('div',{class:'sm',text:s}));
+  box.append(
+    card('ระยะกลาง','a',`สัตว์ ${ani.length} ครั้ง`, `${pc(ani.length,evs.length,0)} ของเหตุการณ์ กระทบผู้ใช้ไฟ ${pc(sumC(ani),allC,0)} ควรติดตั้งอุปกรณ์ป้องกันสัตว์`, `${aniRows.length} รายการ: ${names(aniRows)}`),
+    card('ระยะยาว','r',`อุปกรณ์ชำรุด ${eq.length} ครั้ง`, `กระทบผู้ใช้ไฟ ${pc(sumC(eq),allC,0)} และ CusXTime ${pc(sumX(eq),allX,0)} ประมาณงานเปลี่ยนอุปกรณ์ที่เสื่อมสภาพ`, eqRows.length?`${eqRows.length} รายการ: ${names(eqRows)}`:'ไม่มี'),
+    card('ข้อมูล','b',`ไม่ใช่เหตุการณ์จริง ${fake.length} ครั้ง`, `ถูกนับเข้าดัชนี ${fmt(sumC(fake))} ราย และ CusXTime ${fmtM(sumX(fake))} (${pc(sumX(fake),allX,0)}) ควรตรวจสอบการบันทึก`, fakeRows.length?`${fakeRows.length} รายการ: ${names(fakeRows)}`:'ไม่มี')
+  );
+}
+function renderCause(evs){
+  const m=state.m, idx=[null,E.cus,E.cxt][m];
+  const agg={}; evs.forEach(e=>{agg[e[E.cause]]=(agg[e[E.cause]]||0)+(m===0?1:e[idx]);});
+  const tot=Object.values(agg).reduce((a,b)=>a+b,0);
+  const regTot=Object.values(REG.cause).reduce((s,v)=>s+v[m],0);
+  const unit=['ครั้ง','ราย','ผู้ใช้ไฟ-นาที'][m];
+  $('cHint').textContent = `${fmt(tot)} ${unit} จาก ${fmt(evs.length)} เหตุการณ์ตามตัวกรอง`;
+  const box=$('cause'); box.replaceChildren();
+  const ent=Object.entries(agg).sort((a,b)=>b[1]-a[1]);
+  const max=Math.max(...ent.map(([k,v])=>v/tot), ...ent.map(([k])=>(REG.cause[k]?.[m]||0)/regTot), .01);
+  ent.forEach(([k,v])=>{
+    const share=v/tot, rs=(REG.cause[k]?.[m]||0)/regTot;
+    box.append(el('div',{class:'hb'},
+      el('span',{class:'nm',text:k}),
+      el('div',{class:'tr',title:`ทั้ง กฟฉ.2 ${pc(rs*100,100)}`}, el('i',{style:`width:${share/max*100}%`}), el('u',{style:`left:calc(${rs/max*100}% - 1px)`})),
+      el('span',{class:'v'}, pc(share*100,100), el('small',{text:`${m===2?fmtM(v):fmt(v)} · กฟฉ.2 ${pc(rs*100,100)}`}))));
+  });
+  if(!ent.length) box.append(el('p',{class:'sm',text:'ไม่มีเหตุการณ์ตามตัวกรอง'}));
+}
+function cols(boxId, axisId, buckets, labelFn, axisFn, weFn, tipFn){
+  const box=$(boxId), ax=$(axisId); box.replaceChildren(); ax.replaceChildren();
+  const max=Math.max(1,...buckets.map(b=>b.n)); const step=max<=4?1:Math.ceil(max/4);
+  const top=Math.ceil(max/step)*step;
+  for(let v=step; v<=top; v+=step){ box.append(el('div',{class:'gl',style:`bottom:${v/top*100}%`}, el('span',{text:v}))); }
+  buckets.forEach((b,i)=>{
+    const h=el('div',{class:'hit'+(weFn&&weFn(i)?' we':''),tabindex:0,'aria-label':labelFn(i)+' '+b.n+' ครั้ง'}, el('i',{style:`height:${b.n/top*100}%`}));
+    const show=e=>showTip(e,tipFn(i,b)); h.onpointerenter=show; h.onfocus=show; h.onpointerleave=hideTip; h.onblur=hideTip;
+    box.append(h); ax.append(el('span',{text:axisFn(i)}));
+  });
+}
+function renderTime(evs){
+  const days=Array.from({length:31},()=>({n:0,cus:0}));
+  const hrs=Array.from({length:24},()=>({n:0,cus:0}));
+  evs.forEach(e=>{ const d=+e[E.dt].slice(8,10)-1, h=+e[E.dt].slice(11,13); days[d].n++; days[d].cus+=e[E.cus]; hrs[h].n++; hrs[h].cus+=e[E.cus]; });
+  const we=i=>{const w=new Date(2026,9,i+1).getDay(); return w===0||w===6;};
+  const dLbl=i=>new Date(2026,9,i+1).toLocaleDateString('th-TH',{weekday:'short',day:'numeric',month:'short'});
+  cols('daily','dAxis',days,dLbl,i=>(i%5===0||i===30)?String(i+1):'',we,(i,b)=>[el('b',{text:b.n+' ครั้ง'}),el('span',{text:dLbl(i)}),el('div',{text:'ผู้ใช้ไฟ '+fmt(b.cus)+' ราย'})]);
+  const hLbl=i=>String(i).padStart(2,'0')+':00–'+String(i).padStart(2,'0')+':59';
+  cols('hourly','hAxis',hrs,hLbl,i=>i%3===0?String(i):'',null,(i,b)=>[el('b',{text:b.n+' ครั้ง'}),el('span',{text:hLbl(i)}),el('div',{text:'ผู้ใช้ไฟ '+fmt(b.cus)+' ราย'})]);
+  const pk=[...hrs.keys()].sort((a,b)=>hrs[b].n-hrs[a].n).slice(0,3).sort((a,b)=>a-b);
+  $('hHint').textContent = evs.length? `ชั่วโมงที่เกิดบ่อย ${pk.map(h=>String(h).padStart(2,'0')+':00').join(', ')} น.` : '';
+}
+// ---------- update tracking (shared db) ----------
+const TERMS=[{k:'s',t:'ระยะสั้น',what:'Patrol แก้ไขจุดเสี่ยง'},{k:'m',t:'ระยะกลาง',what:'ติดตั้งอุปกรณ์ป้องกันสัตว์'},{k:'l',t:'ระยะยาว',what:'ประมาณงานเปลี่ยนอุปกรณ์ทดแทนที่เสื่อมสภาพ'}];
+const SS=[{k:'none',t:'ยังไม่กำหนดแผน'},{k:'todo',t:'มีแผน ยังไม่ดำเนินการ'},{k:'req',t:'เสนอของบ / รออนุมัติ'},{k:'work',t:'กำลังดำเนินการ'},{k:'done',t:'แล้วเสร็จ'},{k:'na',t:'ไม่จำเป็น'}];
+const SST=Object.fromEntries(SS.map(s=>[s.k,s.t]));
+const rid=r=>'r'+String(r.no).padStart(2,'0');
+let db=null, docs={}, logs={}, canWrite=null, cur=null, curEv=null;
+const blank=(plan,st)=>({plan,status:st,due:'',fin:'',budget:0,sap:'',result:''});
+const hist=r=>logs[rid(r)]||[];
+const rec=r=>docs[rid(r)]||{s:blank('Patrol แก้ไขจุดเสี่ยง','todo'),m:blank('','none'),l:blank('','none'),tree:{status:'',budget:0,km:0},note:'',by:'',evs:[]};
+const thDate=s=>{ if(!s) return '–'; const d=new Date(s+'T00:00:00'); return isNaN(d)?s:d.toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit'}); };
+function updBtn(r,e){
+  const b=el('button',{type:'button',class:'btn',text:'อัปเดต'});
+  b.onclick=ev=>{ev.stopPropagation(); openForm(r,e);};
+  if(false){ b.disabled=true; b.title=!db?'เข้าสู่ระบบและมีสิทธิ์บันทึกข้อมูลเพื่ออัปเดต':'สิทธิ์ของท่านดูได้อย่างเดียว'; }
+  return b;
+}
+function trackBox(r){
+  const d=rec(r), saved=!!docs[rid(r)];
+  const box=el('div',{style:'display:flex;flex-direction:column;gap:6px'},
+    el('h4',{text:'สถานะการดำเนินงานที่บันทึก'}),
+    el('div',{class:'trk'}, ...TERMS.map(t=>{const x=d[t.k]||{status:'none'}; return el('div',{}, el('b',{text:t.t}), x.plan||t.what, el('br'), el('span',{class:'pill '+(x.status||'none'),text:SST[x.status||'none']}), x.due?el('div',{class:'sm',text:'กำหนด '+thDate(x.due)+(x.fin?' · เสร็จ '+thDate(x.fin):'')}):null, +x.budget?el('div',{class:'sm',text:'งบ '+fmt(x.budget)+' บาท'}):null, x.result?el('div',{class:'sm',text:x.result}):null);})));
+  if(d.tree?.status) box.append(el('div',{class:'sm',text:`ของบตัดต้นไม้: ${({req:'เสนอขอ',appr:'อนุมัติแล้ว',done:'ดำเนินการแล้ว'})[d.tree.status]} ${+d.tree.budget?fmt(d.tree.budget)+' บาท':''} ${+d.tree.km?d.tree.km+' วงจร-กม.':''}`}));
+  if(d.note) box.append(el('div',{class:'sm',text:'หมายเหตุ: '+d.note}));
+  const h=hist(r);
+  if(h.length){
+    const det=el('details',{class:'hist'}, el('summary',{text:`ประวัติการอัปเดต ${h.length} ครั้ง (ข้อมูลทุกครั้งเก็บไว้ ไม่ถูกแทนที่)`}));
+    [...h].reverse().forEach((x,i)=>{
+      const st=TERMS.map(t=>`${t.t}: ${SST[x[t.k]?.status||'none']}${x[t.k]?.result?' – '+x[t.k].result:''}`).join(' · ');
+      det.append(el('div',{class:'hrow'}, el('b',{text:`ครั้งที่ ${h.length-i} · ${new Date(x.updatedAt).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'})}${x.by?' · '+x.by:''}`}), el('div',{text:st}), x.note?el('div',{text:'หมายเหตุ: '+x.note}):null));
+    });
+    box.append(det);
+  }
+  box.append(el('div',{class:'sm',text: saved ? `อัปเดตล่าสุด ${new Date(d.updatedAt).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'})}${d.by?' โดย '+d.by:''}${d.lastEv?' · อ้างอิงเหตุการณ์ '+d.lastEv:''}` : 'ยังไม่มีการอัปเดต กดปุ่ม "อัปเดต" ท้ายแถวของรายการนี้'}));
+  return box;
+}
+const dlg=$('dlg'), form=$('form'), fsWrap=$('fsWrap');
+TERMS.forEach(t=>{
+  const opts=()=>SS.map(s=>el('option',{value:s.k,text:s.t}));
+  fsWrap.append(el('fieldset',{}, el('legend',{}, t.t+' ', el('small',{text:t.what})),
+    el('label',{class:'w2',for:t.k+'Plan'}, el('span',{text:'แผนงาน'}), el('input',{id:t.k+'Plan',type:'text',placeholder:t.what})),
+    el('label',{for:t.k+'St'}, el('span',{text:'สถานะ'}), el('select',{id:t.k+'St'}, ...opts())),
+    el('label',{for:t.k+'Due'}, el('span',{text:'กำหนดแล้วเสร็จ'}), el('input',{id:t.k+'Due',type:'date'})),
+    el('label',{for:t.k+'Fin'}, el('span',{text:'วันที่เสร็จจริง'}), el('input',{id:t.k+'Fin',type:'date'})),
+    el('label',{for:t.k+'Bud'}, el('span',{text:'งบประมาณ (บาท)'}), el('input',{id:t.k+'Bud',type:'number',min:0,step:1000,inputmode:'numeric'})),
+    el('label',{class:'w2',for:t.k+'Res'}, el('span',{text:'ผลการดำเนินงาน'}), el('input',{id:t.k+'Res',type:'text',placeholder:'เช่น ตัดกิ่งไม้ 12 จุด ติดตั้ง Animal guard 6 ชุด'})),
+    el('label',{for:t.k+'Sap'}, el('span',{text:'เลขที่ SAP (WBS/ZPM)'}), el('input',{id:t.k+'Sap',type:'text'}))));
+});
+function openForm(r,e){
+  cur=r; curEv=e; const d=rec(r);
+  $('dlgT').textContent=`อัปเดตการดำเนินงาน · #${r.no} ${r.id}`;
+  $('dlgSub').textContent=`กฟส.${r.off} · ${r.g} ฟีดเดอร์ ${r.fdr} · ${r.cnt} ครั้ง ${r.dur} นาที · ${fmt(r.cus)} ราย · CusXTime ${fmt(r.cxt)}`;
+  $('dlgEv').textContent=!e?`บันทึกครั้งที่ ${hist(r).length+1} · ข้อมูลที่เคยบันทึกจะเก็บไว้ในประวัติ ไม่ถูกแทนที่`:`อ้างอิงเหตุการณ์ ${e[E.ev]} · ${thD(e[E.dt])} · ${e[E.st]} · ${e[E.cause]}${e[E.sub]&&e[E.sub]!==e[E.cause]?' / '+e[E.sub]:''}`;
+  TERMS.forEach(t=>{const x=d[t.k]||{}; $(t.k+'Plan').value=x.plan||''; $(t.k+'St').value=x.status||'none'; $(t.k+'Due').value=x.due||''; $(t.k+'Fin').value=x.fin||''; $(t.k+'Bud').value=x.budget||''; $(t.k+'Res').value=x.result||''; $(t.k+'Sap').value=x.sap||'';});
+  $('tStatus').value=d.tree?.status||''; $('tBud').value=d.tree?.budget||''; $('tKm').value=d.tree?.km||'';
+  $('iNote').value=d.note||''; $('iBy').value=d.by||''; $('fMsg').textContent='';
+  dlg.showModal();
+}
+$('bCancel').onclick=()=>dlg.close();
+$('bX').onclick=()=>dlg.close();
+dlg.addEventListener('click',ev=>{ if(ev.target===dlg) dlg.close(); });
+form.onsubmit=async ev=>{
+  ev.preventDefault(); const msg=$('fMsg'); msg.textContent='';
+  const prev=rec(cur);
+  const body={no:cur.no,device:cur.id,office:cur.off,month:'2569-10'};
+  for(const t of TERMS){
+    const status=$(t.k+'St').value, plan=$(t.k+'Plan').value.trim(), due=$(t.k+'Due').value, fin=$(t.k+'Fin').value;
+    if(status==='done'&&!fin){ msg.textContent=`${t.t}: ระบุวันที่เสร็จจริงเมื่อเลือกสถานะแล้วเสร็จ`; $(t.k+'Fin').focus(); return; }
+    if(status!=='none'&&status!=='na'&&!plan){ msg.textContent=`${t.t}: ระบุแผนงานก่อนเลือกสถานะนี้`; $(t.k+'Plan').focus(); return; }
+    body[t.k]={plan,status,due,fin,budget:+$(t.k+'Bud').value||0,sap:$(t.k+'Sap').value.trim(),result:$(t.k+'Res').value.trim()};
+  }
+  body.tree={status:$('tStatus').value,budget:+$('tBud').value||0,km:+$('tKm').value||0};
+  body.note=$('iNote').value.trim(); body.by=$('iBy').value.trim();
+  body.lastEv=curEv?curEv[E.ev]:(prev.lastEv||''); body.evs=prev.evs||[];
+  body.updatedAt=new Date().toISOString();
+  const btn=$('bSave'); btn.disabled=true;
+  try{ body.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6); (logs[rid(cur)]=logs[rid(cur)]||[]).push(body); rebuild(); persist(); dlg.close(); toast('บันทึกแล้ว'); render(); syncNote(); }
+  catch(err){ msg.textContent = err&&err.code==='not_granted' ? 'ท่านไม่มีสิทธิ์บันทึก ขอสิทธิ์แก้ไขจากเจ้าของหน้า' : 'บันทึกไม่สำเร็จ ลองอีกครั้ง'+(err&&err.code?' ('+err.code+')':''); }
+  finally{ btn.disabled=false; }
+};
+let tt; function toast(s){ const x=$('toast'); x.textContent=s; x.hidden=false; clearTimeout(tt); tt=setTimeout(()=>x.hidden=true,2400); }
+function sync(cls,txt){ $('syncDot').className='dot '+cls; $('syncTxt').textContent=txt; }
+render();
+// ---- local storage: data lives inside this HTML file (+ browser autosave) ----
+const LSKEY='top20-pm-2569-10';
+let dirty=false;
+const asLog=o=>{ const out={}; for(const [k,v] of Object.entries(o||{})){ out[k]=(Array.isArray(v)?v:[v]).filter(x=>x&&x.updatedAt).map(x=>x.id?x:{...x,id:'m'+x.updatedAt}); } return out; };
+function rebuild(){ docs={}; for(const [k,v] of Object.entries(logs)){ v.sort((a,b)=>(a.updatedAt||'').localeCompare(b.updatedAt||'')); if(v.length) docs[k]=v[v.length-1]; } }
+let clearedAt=''; try{ clearedAt=localStorage.getItem(LSKEY+':clearedAt')||''; }catch(e){}
+try{ logs=asLog(JSON.parse(document.getElementById('savedData').textContent||'{}')); for(const k in logs){ logs[k]=logs[k].filter(x=>x.updatedAt>clearedAt); if(!logs[k].length) delete logs[k]; } }catch(e){ logs={}; }
+try{ const ls=asLog(JSON.parse(localStorage.getItem(LSKEY)||'{}')); for(const [k,v] of Object.entries(ls)){ const have=new Set((logs[k]||[]).map(x=>x.id)); v.forEach(x=>{ if(!have.has(x.id)){ (logs[k]=logs[k]||[]).push(x); dirty=true; } }); } }catch(e){}
+rebuild();
+function persist(){ try{ localStorage.setItem(LSKEY, JSON.stringify(logs)); }catch(e){} }
+function syncNote(){
+  const n=Object.keys(docs).length, tot=Object.values(logs).reduce((s,v)=>s+v.length,0);
+  sync('ok', `ข้อมูลอัปเดตเก็บในเบราว์เซอร์ของเครื่องนี้ · อัปเดตแล้ว ${n} จาก 20 รายการ รวม ${tot} ครั้ง`);
+}
+function dl(name, blob){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.append(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},1000); }
+const stamp=()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+const PWH=2949095775;
+const fnv=s=>{ let h=0x811c9dc5; for(const b of new TextEncoder().encode(s)){ h^=b; h=Math.imul(h,0x01000193)>>>0; } return h; };
+const clr=$('clr');
+$('bClr').onclick=()=>{ const tot=Object.values(logs).reduce((s,v)=>s+v.length,0); $('clrSub').textContent=`มีข้อมูลอัปเดต ${tot} ครั้ง จาก ${Object.keys(logs).length} รายการ`; $('clrPw').value=''; $('clrMsg').textContent=''; clr.showModal(); $('clrPw').focus(); };
+$('clrX').onclick=$('clrCancel').onclick=()=>clr.close();
+$('clrForm').onsubmit=ev=>{
+  ev.preventDefault();
+  if(fnv($('clrPw').value)!==PWH){ $('clrMsg').textContent='รหัสผ่านไม่ถูกต้อง'; $('clrPw').select(); return; }
+  logs={}; rebuild();
+  try{ localStorage.removeItem(LSKEY); localStorage.setItem(LSKEY+':clearedAt', new Date().toISOString()); }catch(e){}
+  clr.close(); render(); syncNote(); toast('ล้างข้อมูลที่อัปเดตแล้ว');
+};
+const TREE={'':'ไม่ขอ',req:'เสนอขอ',appr:'อนุมัติแล้ว',done:'ดำเนินการแล้ว'};
+$('bXls').onclick=()=>{
+  const head=['ลำดับ','อันดับ Top 20','OpDeviceID','กฟส.','Feeder','OpDeviceGIStag','ประเภท','จำนวนครั้ง','Duration (นาที)','ผู้ใช้ไฟได้รับผลกระทบ','CusXTime','ครั้งที่อัปเดต','วันเวลาที่บันทึก'];
+  TERMS.forEach(t=>['แผนงาน','สถานะ','กำหนดแล้วเสร็จ','วันที่เสร็จจริง','งบประมาณ (บาท)','ผลการดำเนินงาน','เลขที่ SAP (WBS/ZPM)'].forEach(f=>head.push(`${t.t} - ${f}`)));
+  head.push('ของบตัดต้นไม้ - สถานะคำขอ','ของบตัดต้นไม้ - วงเงิน (บาท)','ของบตัดต้นไม้ - ระยะทาง (วงจร-กม.)','หมายเหตุ / ปัญหาที่พบ','ผู้รายงาน / ตำแหน่ง','อ้างอิงเหตุการณ์');
+  const rows=T20.flatMap(r=>{ const h=hist(r); return h.map((d,i)=>[d,i+1]).map(([d,n])=>{
+    const row=[0,r.no,r.id,'กฟส.'+r.off,r.fdr,r.gis,r.g,r.cnt,r.dur,r.cus,r.cxt,n,new Date(d.updatedAt).toLocaleString('th-TH')];
+    TERMS.forEach(t=>{ const x=d[t.k]||{}; row.push(x.plan||'', d[t.k]?SST[x.status||'none']:'', x.due||'', x.fin||'', x.budget?+x.budget:'', x.result||'', x.sap||''); });
+    row.push(d.tree?TREE[d.tree.status||'']:'', d.tree&&+d.tree.budget?+d.tree.budget:'', d.tree&&+d.tree.km?+d.tree.km:'', d.note||'', d.by||'', d.lastEv||'');
+    return row;
+  }); });
+  rows.forEach((row,i)=>row[0]=i+1);
+  if(!rows.length){ toast('ยังไม่มีข้อมูลอัปเดต'); return; }
+  const name=`Top20_PM_อัปเดต_ต.ค.2569_${stamp()}`;
+  dl(name+'.xlsx', makeXlsx('อัปเดต PM Top20', head, rows));
+  toast('ส่งออก Excel แล้ว');
+};
+
+// ---- minimal .xlsx writer (no internet needed) ----
+const CRCT=(()=>{const t=new Uint32Array(256); for(let n=0;n<256;n++){let c=n; for(let k=0;k<8;k++) c=c&1?0xEDB88320^(c>>>1):c>>>1; t[n]=c>>>0;} return t;})();
+const crc32=u=>{let c=0xFFFFFFFF; for(let i=0;i<u.length;i++) c=CRCT[(c^u[i])&255]^(c>>>8); return (c^0xFFFFFFFF)>>>0;};
+function zip(files){
+  const enc=new TextEncoder(), parts=[], cen=[]; let off=0;
+  for(const [name,txt] of files){
+    const nb=enc.encode(name), data=enc.encode(txt), crc=crc32(data);
+    const h=new DataView(new ArrayBuffer(30)); h.setUint32(0,0x04034b50,true); h.setUint16(4,20,true); h.setUint16(6,0x0800,true); h.setUint32(14,crc,true); h.setUint32(18,data.length,true); h.setUint32(22,data.length,true); h.setUint16(26,nb.length,true);
+    parts.push(new Uint8Array(h.buffer),nb,data);
+    const c=new DataView(new ArrayBuffer(46)); c.setUint32(0,0x02014b50,true); c.setUint16(4,20,true); c.setUint16(6,20,true); c.setUint16(8,0x0800,true); c.setUint32(16,crc,true); c.setUint32(20,data.length,true); c.setUint32(24,data.length,true); c.setUint16(28,nb.length,true); c.setUint32(42,off,true);
+    cen.push(new Uint8Array(c.buffer),nb); off+=30+nb.length+data.length;
+  }
+  const csz=cen.reduce((s,x)=>s+x.length,0), e=new DataView(new ArrayBuffer(22));
+  e.setUint32(0,0x06054b50,true); e.setUint16(8,files.length,true); e.setUint16(10,files.length,true); e.setUint32(12,csz,true); e.setUint32(16,off,true);
+  return new Blob([...parts,...cen,new Uint8Array(e.buffer)],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+function makeXlsx(sheet, head, rows){
+  const x=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'');
+  const col=i=>{let s=''; i++; while(i){const m=(i-1)%26; s=String.fromCharCode(65+m)+s; i=Math.floor((i-1)/26);} return s;};
+  const cell=(v,r,c,st)=>{ const ref=col(c)+(r+1); if(v===''||v==null) return st?`<c r="${ref}" s="${st}"/>`:''; if(typeof v==='number') return `<c r="${ref}"${st?` s="${st}"`:''}><v>${v}</v></c>`; return `<c r="${ref}" t="inlineStr"${st?` s="${st}"`:''}><is><t xml:space="preserve">${x(v)}</t></is></c>`; };
+  const all=[head,...rows], lastCol=col(head.length-1), last=lastCol+all.length;
+  const cols=head.map((h,i)=>`<col min="${i+1}" max="${i+1}" width="${i<11?Math.max(9,h.length+3):Math.max(16,Math.min(42,h.length+3))}" customWidth="1"/>`).join('');
+  const sd=all.map((r,ri)=>`<row r="${ri+1}">${r.map((v,ci)=>cell(v,ri,ci,ri===0?1:(typeof v==='number'?2:0))).join('')}</row>`).join('');
+  const ws=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane xSplit="2" ySplit="1" topLeftCell="C2" activePane="bottomRight" state="frozen"/></sheetView></sheetViews><cols>${cols}</cols><sheetData>${sd}</sheetData><autoFilter ref="A1:${last}"/></worksheet>`;
+  const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0"/></numFmts><fonts count="2"><font><sz val="11"/><name val="Tahoma"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Tahoma"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF4B2E83"/></patternFill></fill></fills><borders count="1"><border/></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment wrapText="1" vertical="center"/></xf><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+  return zip([
+    ['[Content_Types].xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'],
+    ['_rels/.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+    ['xl/workbook.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="${x(sheet)}" sheetId="1" r:id="rId1"/></sheets><definedNames><definedName name="_xlnm._FilterDatabase" localSheetId="0" hidden="1">'${x(sheet)}'!$A$1:$${lastCol}$${all.length}</definedName></definedNames></workbook>`],
+    ['xl/_rels/workbook.xml.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'],
+    ['xl/worksheets/sheet1.xml',ws],
+    ['xl/styles.xml',styles]
+  ]);
+}
+syncNote(); render();
+$('srcNote').textContent = `ที่มา: ไฟล์ "Top 20 Feeder/Device กระทบค่าดัชนีฯ SAIFI/SAIDI" (ลำดับ ครั้ง นาที ผู้ใช้ไฟ CusXTime) และ "Event from report52" (รายละเอียดเหตุการณ์ ${fmt(REG.events)} เหตุการณ์ ไฟฟ้าขัดข้องของ CB Outgoing / Recloser / Drop out Fuse ใน NE2_P เดือนตุลาคม 2569) · ตัวเลขของแต่ละแถวเป็นของ กฟส. ในแถวนั้น (TPP01VR-101 และ PYP04VB-01 จ่ายไฟ 2 กฟส. จึงมี 2 แถว) · เหตุการณ์รายครั้งตรวจกระทบยอดกับไฟล์ Top 20 แล้วตรงทุกแถว · % กฟฉ.2 เทียบผลรวมผู้ใช้ไฟ ${fmt(REG.cus)} ราย และ CusXTime ${fmt(REG.cxt)} ของรายงาน 52 ทั้งเดือน · แนวทาง PM จับคู่ตามสาเหตุที่บันทึก ควรยืนยันด้วยผล Patrol หน้างาน`;
+</script>
+
+</body>
+</html>
